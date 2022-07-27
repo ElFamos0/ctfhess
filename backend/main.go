@@ -10,5 +10,5 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Hello World!")
 	})
-	router.Run("localhost:8080")
+	router.Run("localhost:5050")
 }
