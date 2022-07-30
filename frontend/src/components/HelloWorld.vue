@@ -40,12 +40,8 @@ export default {
     },
 
     async handleSignOut() {
-      try{
-        await this.$gAuth.signOut();
-        this.user = '';
-      } catch(error){
-        console.log(error);
-      }
+      await this.$gAuth.signOut();
+      this.user = '';
     }
 
   },

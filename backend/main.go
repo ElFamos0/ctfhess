@@ -1,14 +1,20 @@
 package main
 
 import (
-	"net/http"
-	"github.com/gin-gonic/gin"
+	"backend/db"
+	"backend/server"
 )
 
 func main() {
-	router := gin.Default()
-	router.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Hello World!")
-	})
-	router.Run("localhost:5050")
+
+	db.InitDatabase()
+	/*
+		router := gin.Default()
+		router.GET("/", func(c *gin.Context) {
+			c.String(http.StatusOK, "Hello World!")
+		})
+		router.Run("localhost:5050")
+	*/
+	server.InitServer()
+
 }
