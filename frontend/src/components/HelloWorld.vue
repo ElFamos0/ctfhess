@@ -18,10 +18,17 @@ export default {
       user: [],
     };
   },
+<<<<<<< Updated upstream
   async created() {
     await getRequest("/users/data", "json").then((res) => {
       this.user = res.data;
     });
+=======
+  async created () {
+    await getRequest('/users/data','json').then((res) =>{
+      this.user = res.data
+    })
+>>>>>>> Stashed changes
   },
 };
 </script>

@@ -1,7 +1,14 @@
 <template>
   <div v-if="loggedIn">
+<<<<<<< Updated upstream
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld :msg="'Tema la taille du test'" />
+=======
+    
+  <img alt="Vue logo" src="./assets/logo.png">
+  <HelloWorld msg="bonsoir"/>
+  <p>{{accessToken}}</p>
+>>>>>>> Stashed changes
   </div>
   <div v-else>
     <LoginView />
@@ -22,9 +29,16 @@ export default {
   data() {
     return {
       loggedIn: authStore.getters.loggedIn,
+<<<<<<< Updated upstream
     };
   },
 };
+=======
+      accessToken: authStore.getters.accessToken
+    }; 
+    },
+  }
+>>>>>>> Stashed changes
 </script>
 
 <style>
