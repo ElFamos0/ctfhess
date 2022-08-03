@@ -25,3 +25,10 @@ type LoginApiResponse struct {
 	Access_token  string `json:"access_token"`
 	Refresh_token string `json:"refresh_token"`
 }
+
+type ProfileDataResponse struct {
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	User_type string `json:"user_type"`
+	ID        int    `json:"id"`
+}

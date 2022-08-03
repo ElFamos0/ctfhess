@@ -1,16 +1,13 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-
-    <h1>Is initialized : {{ Vue3GoogleOauth.isInit }}</h1>
-    <h1>Is authorized : {{ Vue3GoogleOauth.isAuthorized }}</h1>
     <h2>user : {{user}}</h2>
 
   </div>
 </template>
 
 <script>
-import { inject } from 'vue'
+import { getRequest } from '@/requests/getRequest'
 export default {
   name: 'HelloWorld',
   props: {
@@ -19,17 +16,14 @@ export default {
 
   data () {
     return {
-      user: '',
+      user: [],
     }
   },
-
-  setup(){
-    const Vue3GoogleOauth = inject('Vue3GoogleOauth')
-    console.log(Vue3GoogleOauth)
-    return {
-      Vue3GoogleOauth
-    };
-  }
+  async created () {
+    await getRequest('/data','json').then((res) =>{
+      this.user = res.data
+    })
+  },
 }
 </script>
 

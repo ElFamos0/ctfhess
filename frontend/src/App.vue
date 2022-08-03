@@ -2,7 +2,7 @@
   <div v-if="loggedIn">
     
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <HelloWorld msg="Tema la taille du test"/>
   </div>
   <div v-else>
     <LoginView/>

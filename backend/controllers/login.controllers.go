@@ -13,7 +13,6 @@ import (
 )
 
 func validateGoogleToken(ctx *gin.Context) {
-	println("validateGoogleToken")
 	token := ctx.PostForm("credential")
 	//get the token with google api
 	resp, err := http.Get("https://oauth2.googleapis.com/tokeninfo?id_token=" + token)
@@ -43,7 +42,6 @@ func validateGoogleToken(ctx *gin.Context) {
 }
 
 func create_response(email string, name string) (*models.LoginApiResponse, string, error) {
-	println("create_response")
 	user, err := services.GetUserByEmail(email)
 
 	if err != nil {
