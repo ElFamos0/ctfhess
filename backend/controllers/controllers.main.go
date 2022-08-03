@@ -13,6 +13,12 @@ func InitControllers(router *gin.RouterGroup) {
 	// init google authentification route
 	registerLoginRoutes(router)
 	// init user routes
-	users_controllers.RegisterUserRoutes(router)
 
+	registerUsersLoggedInRoutes(router)
+
+}
+
+func registerUsersLoggedInRoutes(rg *gin.RouterGroup) {
+	routerGroup := rg.Group("/users", setUserStatus(), ensureLoggedIn())
+	users_controllers.RegisterUserRoutes(routerGroup)
 }
