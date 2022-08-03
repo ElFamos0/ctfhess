@@ -22,13 +22,13 @@
 import { handleSignIn } from "@/apis/google-api";
 
 export default {
-    data(){
-        return {
-            google_client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
-        };
-    },
-    name:"LoginView",
-    mounted() {
+  data() {
+    return {
+      google_client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
+    };
+  },
+  name: "LoginView",
+  mounted() {
     window.loginCallback = function (googleUser) {
       handleSignIn(googleUser);
     };
