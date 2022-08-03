@@ -5,8 +5,7 @@
     <h1>Is initialized : {{ Vue3GoogleOauth.isInit }}</h1>
     <h1>Is authorized : {{ Vue3GoogleOauth.isAuthorized }}</h1>
     <h2>user : {{user}}</h2>
-    <button @click='handleSignIn' :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized">Sign In</button>
-    <button :disabled="!Vue3GoogleOauth.isAuthorized">Sign Out</button>
+
   </div>
 </template>
 
@@ -24,27 +23,6 @@ export default {
     }
   },
 
-  methods: {
-    async handleSignIn() {
-      try{
-      const googleUser = await this.$gAuth.signIn();
-      console.log(this.$gAuth.signIn  );
-      if (!googleUser) {
-        return null;
-      }
-      this.user = googleUser.getBasicProfile().getEmail();
-      } catch(error){
-        console.log(error);
-        return null;
-      }
-    },
-
-    async handleSignOut() {
-      await this.$gAuth.signOut();
-      this.user = '';
-    }
-
-  },
   setup(){
     const Vue3GoogleOauth = inject('Vue3GoogleOauth')
     console.log(Vue3GoogleOauth)

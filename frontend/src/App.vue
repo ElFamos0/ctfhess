@@ -1,18 +1,37 @@
 <template>
+  <div v-if="loggedIn">
+    
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
+  <div v-else>
+    <LoginView/>
+  </div>
 </template>
 
 <script>
+import {authStore} from './store/authStore'
 import HelloWorld from './components/HelloWorld.vue'
+import LoginView from './views/LoginView.vue'
+
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    LoginView
+  },
+  data() {
+    return {
+      loggedIn: authStore.getters.loggedIn,
+    }; 
+    },
   }
-}
 </script>
+
+
+
 
 <style>
 #app {

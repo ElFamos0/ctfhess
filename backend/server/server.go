@@ -2,6 +2,7 @@ package server
 
 import (
 	"backend/config"
+	"backend/controllers"
 	"net/http"
 	"os"
 	"time"
@@ -28,7 +29,7 @@ func InitServer() {
 
 	basepath := router.Group("/api")
 
-	basepath.GET("/hello", helloWorld)
+	controllers.InitControllers(basepath)
 
 	s := &http.Server{
 		Addr:           APP_DOMAIN + ":" + APP_PORT,
