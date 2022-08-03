@@ -1,37 +1,31 @@
 <template>
   <div v-if="loggedIn">
-    
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Tema la taille du test"/>
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld :msg="'Tema la taille du test'" />
   </div>
   <div v-else>
-    <LoginView/>
+    <LoginView />
   </div>
 </template>
 
 <script>
-import {authStore} from './store/authStore'
-import HelloWorld from './components/HelloWorld.vue'
-import LoginView from './views/LoginView.vue'
-
-
+import { authStore } from "./store/authStore";
+import HelloWorld from "./components/HelloWorld.vue";
+import LoginView from "./views/LoginView.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     HelloWorld,
-    LoginView
+    LoginView,
   },
   data() {
     return {
       loggedIn: authStore.getters.loggedIn,
-    }; 
-    },
-  }
+    };
+  },
+};
 </script>
-
-
-
 
 <style>
 #app {
