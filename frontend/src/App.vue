@@ -1,14 +1,11 @@
 <template>
   <div v-if="loggedIn">
-<<<<<<< Updated upstream
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld :msg="'Tema la taille du test'" />
-=======
-    
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="bonsoir"/>
-  <p>{{accessToken}}</p>
->>>>>>> Stashed changes
+  <v-img src="./assets/logo.png"
+  max-height="200"
+  max-width="250"
+  class="mx-auto">
+  </v-img>
+  
   </div>
   <div v-else>
     <LoginView />
@@ -17,37 +14,31 @@
 
 <script>
 import { authStore } from "./store/authStore";
-import HelloWorld from "./components/HelloWorld.vue";
 import LoginView from "./views/LoginView.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
     LoginView,
   },
   data() {
     return {
       loggedIn: authStore.getters.loggedIn,
-<<<<<<< Updated upstream
-    };
-  },
-};
-=======
       accessToken: authStore.getters.accessToken
     }; 
     },
   }
->>>>>>> Stashed changes
 </script>
 
-<style>
-#app {
+<style lang="scss">
+:root {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #362c50;
   margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
