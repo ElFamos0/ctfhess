@@ -1,15 +1,19 @@
 <template>
-    <h2>user : {{ user }}</h2>
+    <div>
+        <NavBarVue />
+        <h1>Profil</h1>
+        <h2>{{ user }}</h2>
+    </div>
 </template>
 
 <script>
 import { getRequest } from "@/requests/getRequest";
+import NavBarVue from '@/components/NavBar.vue';
 export default {
   name: "ProfilView",
-  props: {
-    msg: String,
+  components: {
+    NavBarVue,
   },
-
   data() {
     return {
       user: [],

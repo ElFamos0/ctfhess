@@ -1,11 +1,6 @@
 <template>
   <div v-if="loggedIn">
-  <v-img src="./assets/logo.png"
-  max-height="200"
-  max-width="250"
-  class="mx-auto">
-  </v-img>
-  
+  <HomeView />
   </div>
   <div v-else>
     <LoginView />
@@ -15,11 +10,13 @@
 <script>
 import { authStore } from "./store/authStore";
 import LoginView from "./views/LoginView.vue";
+import HomeView from "./views/HomeView.vue";
 
 export default {
   name: "App",
   components: {
     LoginView,
+    HomeView,
   },
   data() {
     return {
@@ -37,7 +34,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #362c50;
-  margin-top: 60px;
   margin-left: auto;
   margin-right: auto;
 }
