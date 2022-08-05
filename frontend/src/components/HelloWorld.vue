@@ -5,7 +5,7 @@
 <script>
 import { getRequest } from "@/requests/getRequest";
 export default {
-  name: "ProfilView",
+  name: "HelloWORLDView",
   props: {
     msg: String,
   },

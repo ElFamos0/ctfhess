@@ -5,6 +5,7 @@
   <div v-else>
     <LoginView />
   </div>
+  <router-view/>
 </template>
 
 <script>
