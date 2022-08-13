@@ -1,9 +1,18 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 
+import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import ProfilView from "../views/ProfilView.vue";
 
 const routes = [
+    {
+        path: "/",
+        name: "home",
+        component: HomeView,
+        meta: {
+            title: 'Maison',
+        },
+    },
     {
         path: "/login",
         name: "Login",
@@ -11,7 +20,7 @@ const routes = [
         meta: {
             title: 'Login',
         },
-        },
+    },
     {
         path: "/profil",
         name: "Profil",
@@ -19,13 +28,13 @@ const routes = [
         meta: {
             title: 'Profil',
         },
-        },
+    },
 ];
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
-  });
+});
 
 
 export default router;

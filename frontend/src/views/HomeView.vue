@@ -1,18 +1,42 @@
 <template>
-  <NavBarVue />
-
+  <v-container>
+    <v-row class="mb-5 mt-5">
+      <v-col cols="4" class="text-center">
+        <!-- empty -->
+      </v-col>
+      <v-col cols="4" class="text-center">
+        <chall> </chall>
+      </v-col>
+      <v-col cols="4" class="text-center">
+        <!-- empty -->
+      </v-col>
+    </v-row>
+    <v-row class="mb-5 mt-5">
+      <v-col cols="4" class="text-center">
+        <fakechall> </fakechall>
+      </v-col>
+      <v-col cols="4" class="text-center">
+        <fakechall> </fakechall>
+      </v-col>
+      <v-col cols="4" class="text-center">
+        <fakechall> </fakechall>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import chall from "@/components/Challenge.vue";
+import fakechall from "@/components/FakeChallenge.vue";
 
-// Components
-import NavBarVue from '@/components/NavBar.vue';
-export default defineComponent({
+export default {
   name: 'HomeView',
-
   components: {
-    NavBarVue,
+    chall,
+    fakechall,
   },
-});
+  data() {
+    return {}
+  },
+};
 </script>
