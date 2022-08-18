@@ -3,6 +3,7 @@ import { createWebHashHistory, createRouter } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import ProfilView from "../views/ProfilView.vue";
+import ChallView from "../views/ChallView.vue";
 
 const routes = [
     {
@@ -27,6 +28,14 @@ const routes = [
         component: ProfilView,
         meta: {
             title: 'Profil',
+        },
+    },
+    {
+        path: "/chall",
+        name: "Chall",
+        component: ChallView,
+        meta: {
+            title: 'Chall',
         },
     },
 ];
