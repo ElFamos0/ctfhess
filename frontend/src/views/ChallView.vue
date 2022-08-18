@@ -131,7 +131,7 @@ export default {
       }
     },
     validate() {
-      postRequest('/api/chall/create', this.form, 'json').then(() => {
+      postRequest(this.form, '/api/chall/create', 'json').then(() => {
         this.$router.push('/')
       })
     },
