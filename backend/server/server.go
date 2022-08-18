@@ -3,6 +3,7 @@ package server
 import (
 	"backend/config"
 	"backend/controllers"
+	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -39,7 +40,7 @@ func InitServer() {
 		IdleTimeout:    10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-
+	fmt.Println("Server started on port " + APP_PORT)
 	s.ListenAndServe()
 }
 

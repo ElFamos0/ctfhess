@@ -46,6 +46,8 @@
           label="Points"
         ></v-text-field>
       </v-col>
+      <v-col cols="3" class="text-center">
+      </v-col>
       <v-col cols="6" class="text-center">
         <v-card tonal>
           <v-card-title>
@@ -79,11 +81,20 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <v-col cols="3" class="text-center">
+      </v-col>
+
+      <v-col cols="6" class="text-center">
+        <v-btn color="primary" @click="validate()">
+            Créer le challenge
+        </v-btn>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { postRequest } from "@/requests/postRequest";
 export default {
   name: 'ChallView',
   data() {
@@ -118,6 +129,11 @@ export default {
       if (this.page != 0) {
         this.page--
       }
+    },
+    validate() {
+      postRequest('/api/chall/create', this.form, 'json').then(() => {
+        this.$router.push('/')
+      })
     },
   },
 };
