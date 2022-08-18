@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+    backend:
+        build: backend
+        ports:
+            - "5050:5050"
+
+    vue-app:
+        build: frontend
+        ports:
+            - "8080:8080"
