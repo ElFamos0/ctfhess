@@ -56,6 +56,11 @@ func (p *ChallengePage) Save() error {
 	return tx.Error
 }
 
+func (c *Challenge) Delete() error {
+	tx := db.DB.Delete(c)
+	return tx.Error
+}
+
 func GetAllChallenges() ([]*Challenge, error) {
 	var challenges []*Challenge
 	err := db.DB.
@@ -63,4 +68,15 @@ func GetAllChallenges() ([]*Challenge, error) {
 		//Where("id <= ?", jourJ)
 		Find(&challenges).Error
 	return challenges, err
+}
+
+func GetChallenge(ID int) (*Challenge, error) {
+	challenge := &Challenge{
+		ID: ID,
+	}
+	err := db.DB.
+		Preload("Pages").
+		//Where("id <= ?", jourJ)
+		Find(&challenge).Error
+	return challenge, err
 }

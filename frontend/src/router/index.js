@@ -4,6 +4,7 @@ import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import ProfilView from "../views/ProfilView.vue";
 import ChallView from "../views/ChallView.vue";
+import EditChall from "../views/EditChall.vue";
 
 const routes = [
     {
@@ -36,6 +37,14 @@ const routes = [
         component: ChallView,
         meta: {
             title: 'Chall',
+        },
+    },
+    {
+        path: "/edit",
+        name: "Edit",
+        component: EditChall,
+        meta: {
+            title: 'Edit',
         },
     },
 ];

@@ -6,6 +6,7 @@
       </template>
 
       <template v-slot:append>
+        <v-btn to="/edit" prepend-icon="mdi-pen">Edition</v-btn>
         <v-btn to="/chall" prepend-icon="mdi-plus">Creation</v-btn>
         <v-btn to="/login" prepend-icon="mdi-google">Connexion</v-btn>
         <v-btn to="/profil" prepend-icon="mdi-account">Profil</v-btn>

@@ -6,4 +6,7 @@ func RegisterChallRoutes(router *gin.RouterGroup) {
 
 	RegisterCreateChall(router)
 	RegisterGetAllChall(router)
+	RegisterDeleteChall(router)
+	RegisterEditChall(router)
+	RegisterGetAllChallAdmin(router)
 }

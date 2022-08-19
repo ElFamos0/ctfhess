@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func createChall(ctx *gin.Context) {
+func editChall(ctx *gin.Context) {
 	var chall models.Challenge
 	err := ctx.BindJSON(&chall)
 	if err != nil {
@@ -26,6 +26,6 @@ func createChall(ctx *gin.Context) {
 	})
 }
 
-func RegisterCreateChall(router *gin.RouterGroup) {
-	router.POST("/create", createChall)
+func RegisterEditChall(router *gin.RouterGroup) {
+	router.POST("/edit", editChall)
 }
