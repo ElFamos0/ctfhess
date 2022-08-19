@@ -2,7 +2,6 @@ package challcontrollers
 
 import (
 	"backend/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +9,13 @@ import (
 
 const (
 	MAXDAY = 31
+)
+
+var (
+	currentDay = 1
+	fakeChall  = &models.Challenge{
+		Fake: true,
+	}
 )
 
 func getAllChall(ctx *gin.Context) {
@@ -24,6 +30,10 @@ func getAllChall(ctx *gin.Context) {
 		var L []*models.Challenge
 		for _, c := range c {
 			if c.OpensAt == day {
+				if day > currentDay {
+					L = append(L, fakeChall)
+					continue
+				}
 				L = append(L, c)
 			}
 		}
@@ -38,7 +48,6 @@ func getAllChall(ctx *gin.Context) {
 			break
 		}
 	}
-	fmt.Println(challenges[0][0].Pages)
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"success":    true,

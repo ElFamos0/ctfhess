@@ -16,8 +16,7 @@
                 {{chall.pages[page].title}}
             </v-card-title>
             <v-card-text>
-                {{chall.pages[page].description}}   
-                
+                {{chall.pages[page].description}}
                 <v-container v-if="chall.pages[page].flag">
                     <v-text-field v-model="flag" label="Flag" :rules="[(v) => !!v || 'Flag is required']">
                     </v-text-field>

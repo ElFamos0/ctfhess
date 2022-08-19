@@ -29,6 +29,7 @@ type Challenge struct {
 	Flag             string `json:"flag"`
 	OpensAt          int    `json:"day_open"`
 	Points           int    `json:"points"`
+	Fake             bool   `gorm:"-" json:"fake"`
 
 	Pages []*ChallengePage `json:"pages"` // Il faut preload avec le bon ordre (ID asc)
 }

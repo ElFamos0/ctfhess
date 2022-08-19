@@ -1,21 +1,14 @@
 <template>
   <v-container>
     <v-row class="mb-5 mt-5" justify="center" v-for="c in challenges" :key="c">
-      <template v-if="c != null" >
         <v-col cols="4" class="text-center" v-for="chall in c" :key="chall">
-          <chall :chall="chall"> </chall>
+          <template v-if="!chall.fake" >
+            <chall :chall="chall"> </chall>
+          </template>
+          <template v-else>
+            <fakechall></fakechall>
+          </template>
         </v-col>
-      </template>
-      <template v-else>
-        <v-col cols="4" class="text-center" :key="chall">
-          <fakechall></fakechall>
-        </v-col>
-      </template>
-    </v-row>
-    <v-row class="mb-5 mt-5" justify="center">
-      <v-col cols="4" class="text-center">
-        <fakechall></fakechall>
-      </v-col>
     </v-row>
   </v-container>
 </template>
