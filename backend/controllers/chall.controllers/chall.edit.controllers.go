@@ -8,14 +8,22 @@ import (
 )
 
 func editChall(ctx *gin.Context) {
-	var chall models.Challenge
-	err := ctx.BindJSON(&chall)
+	var challSave models.Challenge
+	err := ctx.BindJSON(&challSave)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error binding JSON"})
 		return
 	}
 
-	err = chall.Save()
+	challDB, err := models.GetChallenge(challSave.ID)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error getting challenge"})
+		return
+	}
+	challDB.Delete()
+
+	challSave.ID = 0
+	err = challSave.Save()
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error saving challenge"})
 		return

@@ -56,6 +56,11 @@ func (p *ChallengePage) Save() error {
 	return tx.Error
 }
 
+func (p *ChallengePage) Delete() error {
+	tx := db.DB.Delete(p)
+	return tx.Error
+}
+
 func (c *Challenge) Delete() error {
 	tx := db.DB.Delete(c)
 	return tx.Error
