@@ -2,20 +2,21 @@ package db
 
 import (
 	"backend/config"
-	"backend/models"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-func InitDatabase() {
+var DB *gorm.DB
+
+func init() {
 	config.InitEnv()
 
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	// Si on utilise ':=' on 'shadow' la variable DB qui sera définis localement dans la fonction (et pas globalement pour le reste du programme)
+	var err error
+	DB, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 
 	if err != nil {
 		panic(err)
 	}
-
-	db.AutoMigrate(&models.User{})
 }

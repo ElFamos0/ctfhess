@@ -1,6 +1,10 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"backend/db"
+
+	"gorm.io/gorm"
+)
 
 // title: '',
 // subtitle: '',
@@ -22,8 +26,8 @@ type Challenge struct {
 	Title            string `json:"title"`
 	Subtitle         string `json:"subtitle"`
 	ShortDescription string `json:"short_description"`
-	OpensAt          string `json:"day_open"`
 	Flag             string `json:"flag"`
+	OpensAt          int    `json:"day_open"`
 	Points           int    `json:"points"`
 
 	Pages []*ChallengePage `json:"pages"` // Il faut preload avec le bon ordre (ID asc)
@@ -32,8 +36,30 @@ type Challenge struct {
 type ChallengePage struct {
 	gorm.Model
 	ID          int    `gorm:"primary_key" json:"id"`
-	ChallengeID int    `json:"challenge_id"`
+	ChallengeID int    `gorm:"primary_key" json:"challenge_id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	AskFlag     bool   `json:"flag"`
+}
+
+func (c *Challenge) Save() error {
+	for i, p := range c.Pages {
+		p.ID = i
+	}
+	tx := db.DB.Save(c)
+	return tx.Error
+}
+
+func (p *ChallengePage) Save() error {
+	tx := db.DB.Save(p)
+	return tx.Error
+}
+
+func GetAllChallenges() ([]*Challenge, error) {
+	var challenges []*Challenge
+	err := db.DB.
+		Preload("Pages").
+		//Where("id <= ?", jourJ)
+		Find(&challenges).Error
+	return challenges, err
 }

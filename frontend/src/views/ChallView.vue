@@ -22,7 +22,7 @@
       </v-col>
       <v-col cols="6" class="text-center">
         <v-text-field
-          v-model="form.day_open"
+          v-model.number="form.day_open"
           type="number"
           density="compact"
           hide-details
@@ -38,7 +38,7 @@
       </v-col>
       <v-col cols="6" class="text-center">
         <v-text-field
-          v-model="form.points"
+          v-model.number="form.points"
           type="number"
           density="compact"
           hide-details
@@ -103,9 +103,9 @@ export default {
         title: '',
         subtitle: '',
         short_description: '',
-        day_open: '',
+        day_open: 0,
         flag: '',
-        points: '',
+        points: 0,
         pages: [
           {
             title: '',
@@ -131,7 +131,7 @@ export default {
       }
     },
     validate() {
-      postRequest(this.form, '/api/chall/create', 'json').then(() => {
+      postRequest(this.form, '/chall/create', 'json').then(() => {
         this.$router.push('/')
       })
     },

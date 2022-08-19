@@ -1,27 +1,40 @@
 package challcontrollers
 
 import (
-	"backend/services"
+	"backend/models"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func createChall(ctx *gin.Context) {
-	user_id, _ := ctx.Get("user_id")
+	// jsonData, err := ioutil.ReadAll(ctx.Request.Body)
+	// if err != nil {
+	// 	ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error binding JSON"})
+	// 	return
+	// }
+	// fmt.Println(string(jsonData))
 
-	user_id_int, _ := user_id.(int)
-
-	user, err := services.GetUserByID(user_id_int)
+	var chall models.Challenge
+	err := ctx.BindJSON(&chall)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error getting user"})
+		fmt.Println(err)
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error binding JSON"})
+		return
 	}
 
-	response := services.NewProfileDataResponse(user)
+	err = chall.Save()
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error saving challenge"})
+		return
+	}
 
-	ctx.JSON(http.StatusOK, response)
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "ok",
+	})
 }
 
 func RegisterCreateChall(router *gin.RouterGroup) {
-	router.GET("/create", createChall)
+	router.POST("/create", createChall)
 }
