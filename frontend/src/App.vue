@@ -45,7 +45,8 @@ export default {
       "Compromet ma machine virtuelle",
       "L'heure de capturer le drapeau",
       "Prime à l'insecte",
-      "La nuit de la compromission"
+      "La nuit de la compromission",
+      "Base de données de compromission",
     ];
 
     this.navText = navTexts[Math.floor(Math.random() * navTexts.length)];
