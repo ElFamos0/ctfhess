@@ -1,6 +1,5 @@
 <template>    
-    <notifications position="top center" classes="notif vue-notification"/>
-    <v-card tonal @click="click()" :color="color">
+    <v-card height="100%" tonal @click="click()" :color="color">
         <v-card-title>
             {{chall.title}}
         </v-card-title>
