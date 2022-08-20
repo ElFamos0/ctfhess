@@ -21,6 +21,7 @@ type User struct {
 	Type    UserType `json:"type"`
 
 	Completions []*Completion `gorm:"foreignkey:UserID" json:"completions"`
+	Points      int           `gorm:"-" json:"points"`
 
 	// Name            string `json:"name"`
 	// Email           string `json:"email"`

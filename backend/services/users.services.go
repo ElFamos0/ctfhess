@@ -18,8 +18,13 @@ func AddUser(user *models.User) (string, error) {
 func GetUserByID(id string) (*models.User, error) {
 	var user models.User
 	db.DB.
+		Preload("Completions.Challenge").
 		Preload("Completions").
 		First(&user, id)
+
+	for _, c := range user.Completions {
+		user.Points += c.Challenge.Points
+	}
 
 	return &user, nil
 }
