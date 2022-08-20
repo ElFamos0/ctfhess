@@ -28,12 +28,13 @@ type Challenge struct {
 	Points           int    `json:"points"`
 	Fake             bool   `gorm:"-" json:"fake"`
 
-	Pages []*ChallengePage `json:"pages"` // Il faut preload avec le bon ordre (ID asc)
+	Pages []*ChallengePage `gorm:"foreignkey:ChallengeID" json:"pages"` // Il faut preload avec le bon ordre (ID asc)
 }
 
 type ChallengePage struct {
 	ID          int    `gorm:"primary_key" json:"id"`
-	ChallengeID int    `gorm:"primary_key" json:"challenge_id"`
+	Index       int    `json:"index"`
+	ChallengeID int    `json:"challenge_id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	AskFlag     bool   `json:"flag"`
@@ -41,7 +42,7 @@ type ChallengePage struct {
 
 func (c *Challenge) Save() error {
 	for i, p := range c.Pages {
-		p.ID = i
+		p.Index = i
 	}
 	tx := db.DB.Save(c)
 	return tx.Error

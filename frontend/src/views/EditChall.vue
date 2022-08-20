@@ -1,5 +1,8 @@
 <template>
     <v-container>
+        <h1>Edition des challenges</h1>
+    </v-container>
+    <v-container>
         <v-dialog v-model="dialog">
             <v-card v-if="dialog">
                 <EditChallViewVue :chall="challenge" @close="dialog = false"></EditChallViewVue>
@@ -7,7 +10,7 @@
         </v-dialog>
         <v-row class="mb-5 mt-5" justify="center" v-for="c in challenges" :key="c">
             <v-col cols="4" class="text-center" v-for="chall in c" :key="chall">
-                <v-card tonal @click="dialog = true; challenge = chall;">
+                <v-card height="100%" tonal @click="dialog = true; challenge = chall;">
                     <v-card-title>
                         {{chall.title}}
                     </v-card-title>
