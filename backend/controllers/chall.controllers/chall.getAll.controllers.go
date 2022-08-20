@@ -29,6 +29,7 @@ func getAllChall(ctx *gin.Context) {
 	for day := 0; day < MAXDAY; day++ {
 		var L []*models.Challenge
 		for _, c := range c {
+			c.Flag = ""
 			if c.OpensAt == day {
 				if day > currentDay {
 					L = append(L, fakeChall)

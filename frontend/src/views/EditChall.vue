@@ -2,7 +2,7 @@
     <v-container>
         <v-dialog v-model="dialog">
             <v-card v-if="dialog">
-                <EditChallViewVue :chall="challenge"></EditChallViewVue>
+                <EditChallViewVue :chall="challenge" @close="dialog = false"></EditChallViewVue>
             </v-card>
         </v-dialog>
         <v-row class="mb-5 mt-5" justify="center" v-for="c in challenges" :key="c">

@@ -2,8 +2,6 @@ package models
 
 import (
 	"backend/db"
-
-	"gorm.io/gorm"
 )
 
 // title: '',
@@ -21,7 +19,6 @@ import (
 // ],
 
 type Challenge struct {
-	gorm.Model
 	ID               int    `gorm:"primary_key" json:"id"`
 	Title            string `json:"title"`
 	Subtitle         string `json:"subtitle"`
@@ -35,7 +32,6 @@ type Challenge struct {
 }
 
 type ChallengePage struct {
-	gorm.Model
 	ID          int    `gorm:"primary_key" json:"id"`
 	ChallengeID int    `gorm:"primary_key" json:"challenge_id"`
 	Title       string `json:"title"`
@@ -62,6 +58,9 @@ func (p *ChallengePage) Delete() error {
 }
 
 func (c *Challenge) Delete() error {
+	db.DB.Table("completions").Delete(&Completion{}, "chall_id = ?", c.ID)
+	db.DB.Table("challenge_pages").Delete(&ChallengePage{}, "challenge_id = ?", c.ID)
+
 	tx := db.DB.Delete(c)
 	return tx.Error
 }

@@ -1,6 +1,7 @@
 package challcontrollers
 
 import (
+	"backend/controllers/middlewares.go"
 	"backend/models"
 	"net/http"
 
@@ -27,5 +28,5 @@ func createChall(ctx *gin.Context) {
 }
 
 func RegisterCreateChall(router *gin.RouterGroup) {
-	router.POST("/create", createChall)
+	router.POST("/create", middlewares.EnsureAdmin(), createChall)
 }

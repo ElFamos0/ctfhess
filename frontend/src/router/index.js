@@ -1,7 +1,6 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 
 import HomeView from "../views/HomeView.vue";
-import LoginView from "../views/LoginView.vue";
 import ProfilView from "../views/ProfilView.vue";
 import ChallView from "../views/ChallView.vue";
 import EditChall from "../views/EditChall.vue";
@@ -13,14 +12,6 @@ const routes = [
         component: HomeView,
         meta: {
             title: 'Maison',
-        },
-    },
-    {
-        path: "/login",
-        name: "Login",
-        component: LoginView,
-        meta: {
-            title: 'Login',
         },
     },
     {

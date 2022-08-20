@@ -1,5 +1,4 @@
 import { getAPI } from "@/apis/axios-api";
-import { refreshToken } from "@/requests/refreshRequests";
 import { createHeader } from "@/requests/createHeader";
 
 function getRequest(url, headerType, params = {}) {
@@ -13,7 +12,7 @@ function getRequest(url, headerType, params = {}) {
       .catch((error) => {
         if (error.response) {
           if (error.response.status === 401) {
-            refreshToken();
+            //refreshToken();
           }
         }
         reject(error);

@@ -1,6 +1,7 @@
 package challcontrollers
 
 import (
+	"backend/controllers/middlewares.go"
 	"backend/models"
 	"net/http"
 
@@ -37,5 +38,5 @@ func deleteChall(ctx *gin.Context) {
 }
 
 func RegisterDeleteChall(router *gin.RouterGroup) {
-	router.POST("/delete", deleteChall)
+	router.POST("/delete", middlewares.EnsureAdmin(), deleteChall)
 }

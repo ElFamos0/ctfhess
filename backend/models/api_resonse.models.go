@@ -27,8 +27,8 @@ type LoginApiResponse struct {
 }
 
 type ProfileDataResponse struct {
-	Name      string `json:"name"`
-	Email     string `json:"email"`
-	User_type string `json:"user_type"`
-	ID        int    `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	// User_type string `json:"user_type"`
+	ID string `json:"id"`
 }

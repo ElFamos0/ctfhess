@@ -3,7 +3,7 @@
     <v-row class="mb-5 mt-5" justify="center" v-for="c in challenges" :key="c">
         <v-col cols="4" class="text-center" v-for="chall in c" :key="chall">
           <template v-if="!chall.fake" >
-            <chall :chall="chall"> </chall>
+            <chall :chall="chall" :conn="conn"> </chall>
           </template>
           <template v-else>
             <fakechall></fakechall>
@@ -20,6 +20,7 @@ import fakechall from "@/components/FakeChallenge.vue";
 
 export default {
   name: 'HomeView',
+  props:["conn"],
   components: {
     chall,
     fakechall,
@@ -34,7 +35,6 @@ export default {
       data = data.data
       if (data.success) {
         this.challenges = data.challenges
-        console.log(this.challenges)
       }
     })
   },

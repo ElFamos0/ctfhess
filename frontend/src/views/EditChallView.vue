@@ -145,11 +145,13 @@ export default {
         id: this.form.id,
       }
       postRequest(data, '/chall/delete', 'json').then(() => {
+        this.$emit('close')
         this.$router.push('/')
       })
     },
     validate() {
       postRequest(this.form, '/chall/edit', 'json').then(() => {
+        this.$emit('close')
         this.$router.push('/')
       })
     },

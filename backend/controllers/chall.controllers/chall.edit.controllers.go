@@ -1,6 +1,7 @@
 package challcontrollers
 
 import (
+	"backend/controllers/middlewares.go"
 	"backend/models"
 	"net/http"
 
@@ -35,5 +36,5 @@ func editChall(ctx *gin.Context) {
 }
 
 func RegisterEditChall(router *gin.RouterGroup) {
-	router.POST("/edit", editChall)
+	router.POST("/edit", middlewares.EnsureAdmin(), editChall)
 }

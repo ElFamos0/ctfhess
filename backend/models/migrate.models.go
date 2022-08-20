@@ -9,5 +9,6 @@ func init() {
 		&Challenge{},
 		&ChallengePage{},
 		&Claims{},
+		&Completion{},
 	)
 }

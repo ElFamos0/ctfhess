@@ -1,6 +1,7 @@
 package challcontrollers
 
 import (
+	"backend/controllers/middlewares.go"
 	"backend/models"
 	"net/http"
 
@@ -41,5 +42,5 @@ func getAllChallAdmin(ctx *gin.Context) {
 }
 
 func RegisterGetAllChallAdmin(router *gin.RouterGroup) {
-	router.GET("/getalladmin", getAllChallAdmin)
+	router.GET("/getalladmin", middlewares.EnsureAdmin(), getAllChallAdmin)
 }
