@@ -37,8 +37,8 @@ export default {
         logged: false,
         user: {},
       },
-      logInURI: `http://${process.env.VUE_APP_BACKEND_DOMAIN}:${process.env.VUE_APP_BACKEND_PORT}/api/login`,
-      logOutURI: `http://${process.env.VUE_APP_BACKEND_DOMAIN}:${process.env.VUE_APP_BACKEND_PORT}/api/logout`,
+      logInURI: `${process.env.VUE_APP_BACKEND_URI}/api/login`,
+      logOutURI: `${process.env.VUE_APP_BACKEND_URI}/api/logout`,
       navText: '',
     }; 
   },
