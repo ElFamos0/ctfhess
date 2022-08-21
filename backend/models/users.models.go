@@ -17,7 +17,7 @@ type User struct {
 	Name    string   `json:"name"`
 	Surname string   `json:"surname"`
 	Promo   int      `json:"promo"`
-	Spé     string   `json:"spé"`
+	Spe     string   `json:"spe"`
 	Type    UserType `json:"type"`
 
 	Completions []*Completion `gorm:"foreignkey:UserID" json:"completions"`

@@ -21,7 +21,7 @@ var scopes = []string{
 
 type Education struct {
 	Promo  int    `json:"Promotion"`
-	Spé    string `json:"Approfondissement"`
+	Spe    string `json:"Approfondissement"`
 	Statut int    `json:"Statut"`
 }
 

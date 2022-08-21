@@ -97,7 +97,7 @@ func googleCallback(ctx *gin.Context) {
 		Name:    user.FirstName,
 		Surname: user.LastName,
 		Promo:   edc.Promo,
-		Spé:     edc.Spé,
+		Spe:     edc.Spe,
 		Type:    models.AdminUser,
 	}
 
