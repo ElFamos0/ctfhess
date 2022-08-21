@@ -89,4 +89,4 @@ deploy:
   variables:
     GIT_STRATEGY: none
   script:
-    - 'wget --header "service: challenge_inte" --header "webhook-token: $WEBHOOK_TOKEN" http://wordchamp.info:9001/hooks/deploy'
+    - 'wget --header "service: challenge_inte" --header "webhook-token: kjlfHqs45hgctf8" http://wordchamp.info:9001/hooks/deploy'
