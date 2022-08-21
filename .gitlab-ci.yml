@@ -27,7 +27,7 @@ build-back:
   script:
     - docker pull $CI_REGISTRY_IMAGE:latest-back || true
     - docker build -t $TEST_IMAGE --cache-from $RELEASE_IMAGE backend
-    - docker push $TEST_IMAGE:latest-back
+    - docker push $TEST_IMAGE
 
 release-back:
   stage: release-back
@@ -44,7 +44,7 @@ release-back:
   script:
     - docker pull $TEST_IMAGE
     - docker tag $TEST_IMAGE $RELEASE_IMAGE
-    - docker push $RELEASE_IMAGE:latest-back
+    - docker push $RELEASE_IMAGE
 
 build-front:
   stage: build-front
@@ -60,7 +60,7 @@ build-front:
   script:
     - docker pull $CI_REGISTRY_IMAGE:latest-front || true
     - docker build -t $TEST_IMAGE --cache-from $RELEASE_IMAGE frontend
-    - docker push $TEST_IMAGE:latest-front
+    - docker push $TEST_IMAGE
 
 release-front:
   stage: release-front
@@ -77,7 +77,7 @@ release-front:
   script:
     - docker pull $TEST_IMAGE
     - docker tag $TEST_IMAGE $RELEASE_IMAGE
-    - docker push $RELEASE_IMAGE:latest-front
+    - docker push $RELEASE_IMAGE
 
 
 deploy:
