@@ -98,7 +98,7 @@ func googleCallback(ctx *gin.Context) {
 		Surname: user.LastName,
 		Promo:   edc.Promo,
 		Spe:     edc.Spe,
-		Type:    models.AdminUser,
+		Type:    models.NormalUser,
 	}
 
 	db.DB.Save(u)
