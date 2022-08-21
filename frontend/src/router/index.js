@@ -4,6 +4,7 @@ import HomeView from "../views/HomeView.vue";
 import ProfilView from "../views/ProfilView.vue";
 import ChallView from "../views/ChallView.vue";
 import EditChall from "../views/EditChall.vue";
+import Scoreboard from "../views/ScoreBoard.vue";
 
 const routes = [
     {
@@ -36,6 +37,14 @@ const routes = [
         component: EditChall,
         meta: {
             title: 'Edit',
+        },
+    },
+    {
+        path: "/scoreboard",
+        name: "Scoreboard",
+        component: Scoreboard,
+        meta: {
+            title: 'Scoreboard',
         },
     },
 ];

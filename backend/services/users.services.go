@@ -20,7 +20,7 @@ func GetUserByID(id string) (*models.User, error) {
 	db.DB.
 		Preload("Completions.Challenge").
 		Preload("Completions").
-		First(&user, id)
+		Find(&user, id)
 
 	for _, c := range user.Completions {
 		user.Points += c.Challenge.Points

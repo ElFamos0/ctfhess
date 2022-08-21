@@ -6,13 +6,19 @@
       </template>
 
       <template v-slot:append>
-        <v-btn to="/edit" prepend-icon="mdi-pen" v-if="conn.user.type==1">Edition</v-btn>
-        <v-btn to="/chall" prepend-icon="mdi-plus" v-if="conn.user.type==1">Creation</v-btn>
+        <template v-if="conn.user">
+          <v-btn to="/edit" prepend-icon="mdi-pen" v-if="conn.user.type==1">Edition</v-btn>
+          <v-btn to="/chall" prepend-icon="mdi-plus" v-if="conn.user.type==1">Creation</v-btn>
+        </template>
 
-        <v-btn :href="logInURI" target="_self" prepend-icon="mdi-google" v-if="!conn.logged">Connexion</v-btn>
-        <v-btn :href="logOutURI" target="_self" prepend-icon="mdi-google" v-else>Déconnexion</v-btn>
-
-        <v-btn to="/profil" prepend-icon="mdi-account" v-if="conn.logged">Profil</v-btn>
+        <template v-if="!conn.logged">
+          <v-btn :href="logInURI" target="_self" prepend-icon="mdi-google">Connexion</v-btn>
+        </template>
+        <template v-else>
+          <v-btn to="/scoreboard" prepend-icon="mdi-counter">Tableau des scores</v-btn>
+          <v-btn to="/profil" prepend-icon="mdi-account">Profil</v-btn>
+          <v-btn :href="logOutURI" target="_self" prepend-icon="mdi-google">Déconnexion</v-btn>
+        </template>
       </template>
     </v-app-bar>
 

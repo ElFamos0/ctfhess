@@ -42,3 +42,11 @@ func (u *User) Profile() *ProfileDataResponse {
 		Email: u.Email,
 	}
 }
+
+func (u *User) GetPoints() (pt int) {
+	for _, c := range u.Completions {
+		pt += c.Challenge.Points
+	}
+
+	return pt
+}
