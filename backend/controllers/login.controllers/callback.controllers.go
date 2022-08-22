@@ -3,6 +3,7 @@ package logincontrollers
 import (
 	"backend/db"
 	"backend/models"
+	"backend/services"
 	"context"
 	"encoding/json"
 	"net/http"
@@ -91,6 +92,8 @@ func googleCallback(ctx *gin.Context) {
 	}
 	// Saves to database
 
+	alreadyRegistered, _ := services.GetUserByID(user.UserID)
+
 	u := &models.User{
 		ID:      user.UserID,
 		Email:   user.Email,
@@ -98,6 +101,8 @@ func googleCallback(ctx *gin.Context) {
 		Surname: user.LastName,
 		Promo:   edc.Promo,
 		Spe:     edc.Spe,
+
+		Type: alreadyRegistered.Type,
 	}
 
 	db.DB.Save(u)
