@@ -45,6 +45,10 @@ func (u *User) Profile() *ProfileDataResponse {
 
 func (u *User) GetPoints() (pt int) {
 	for _, c := range u.Completions {
+		c.Challenge = &Challenge{
+			ID: c.ChallID,
+		}
+		db.DB.Find(&c.Challenge)
 		pt += c.Challenge.Points
 	}
 

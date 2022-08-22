@@ -8,7 +8,7 @@ type Completion struct {
 	ChallID int    `gorm:"primary_key;column:chall_id" json:"chall_id"`
 	UserID  string `gorm:"primary_key;column:user_id" json:"user_id"`
 
-	Challenge *Challenge `gorm:"foreignkey:ID;references:ChallID" json:"challenge"`
+	Challenge *Challenge `gorm:"-" json:"challenge"`
 }
 
 func (c *Completion) Save() error {

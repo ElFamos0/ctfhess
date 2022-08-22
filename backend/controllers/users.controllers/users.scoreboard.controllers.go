@@ -24,7 +24,7 @@ func UserToScoreboardUser(user *models.User) *ScoreboardUsers {
 func GetScoreboard(ctx *gin.Context) {
 	u := []*models.User{}
 	db.DB.
-		Preload("Completions.Challenge").
+		//Preload("Completions.Challenge").
 		Preload("Completions").
 		Find(&u)
 

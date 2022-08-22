@@ -18,11 +18,15 @@ func AddUser(user *models.User) (string, error) {
 func GetUserByID(id string) (*models.User, error) {
 	var user models.User
 	db.DB.
-		Preload("Completions.Challenge").
+		//Preload("Completions.Challenge").
 		Preload("Completions").
 		Find(&user, id)
 
 	for _, c := range user.Completions {
+		c.Challenge = &models.Challenge{
+			ID: c.ChallID,
+		}
+		db.DB.Find(&c.Challenge)
 		user.Points += c.Challenge.Points
 	}
 
