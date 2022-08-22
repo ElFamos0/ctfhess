@@ -16,11 +16,13 @@ func AddUser(user *models.User) (string, error) {
 }
 
 func GetUserByID(id string) (*models.User, error) {
-	var user models.User
+	user := &models.User{
+		ID: id,
+	}
 	db.DB.
 		//Preload("Completions.Challenge").
 		Preload("Completions").
-		Find(&user, id)
+		Find(&user)
 
 	for _, c := range user.Completions {
 		c.Challenge = &models.Challenge{
@@ -30,14 +32,25 @@ func GetUserByID(id string) (*models.User, error) {
 		user.Points += c.Challenge.Points
 	}
 
-	return &user, nil
+	return user, nil
 }
 
 func GetUserByEmail(email string) (*models.User, error) {
-	var user models.User
-	if err := db.DB.Where("email = ?", email).First(&user).Error; err != nil {
-		return nil, err
+	user := &models.User{
+		Email: email,
+	}
+	db.DB.
+		//Preload("Completions.Challenge").
+		Preload("Completions").
+		Find(&user)
+
+	for _, c := range user.Completions {
+		c.Challenge = &models.Challenge{
+			ID: c.ChallID,
+		}
+		db.DB.Find(&c.Challenge)
+		user.Points += c.Challenge.Points
 	}
 
-	return &user, nil
+	return user, nil
 }

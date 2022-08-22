@@ -13,12 +13,12 @@ type UserType int
 
 type User struct {
 	ID      string   `gorm:"primary_key" json:"id"`
-	Email   string   `json:"email"`
-	Name    string   `json:"name"`
-	Surname string   `json:"surname"`
-	Promo   int      `json:"promo"`
-	Spe     string   `json:"spe"`
-	Type    UserType `json:"type"`
+	Email   string   `gorm:"column:email" json:"email"`
+	Name    string   `gorm:"column:name" json:"name"`
+	Surname string   `gorm:"column:surname" json:"surname"`
+	Promo   int      `gorm:"column:promo" json:"promo"`
+	Spe     string   `gorm:"column:spe" json:"spe"`
+	Type    UserType `gorm:"column:type" json:"type"`
 
 	Completions []*Completion `gorm:"foreignkey:UserID" json:"completions"`
 	Points      int           `gorm:"-" json:"points"`
