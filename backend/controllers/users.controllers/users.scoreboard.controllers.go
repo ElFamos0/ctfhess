@@ -37,7 +37,7 @@ func GetScoreboard(ctx *gin.Context) {
 		} else {
 			inserted := false
 			for i, sb := range scoreboard {
-				if user.Points < sb.Points {
+				if user.Points > sb.Points {
 					// insert in the scoreboard
 					inserted = true
 					scoreboard = append(scoreboard[:i], append([]*ScoreboardUsers{UserToScoreboardUser(user)}, scoreboard[i:]...)...)
