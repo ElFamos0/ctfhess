@@ -17,6 +17,34 @@
             </v-card-title>
             <v-card-text>
                 <VueMarkdownIt :source="chall.pages[page].description"></VueMarkdownIt>
+                
+                <v-dialog v-model="image_dialog">
+                    <v-card tonal v-if="dialog" width="500px">
+                        <v-img :src="fileURI+image" class="image"/>
+                    </v-card>
+                </v-dialog>
+                <v-row justify="center">
+                    <template v-for="file in chall.pages[page].files" :key="file">
+                        <v-col cols="2">
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <template v-if="file.name.split('.').pop() == 'jpeg' || file.name.split('.').pop() == 'jpg' || file.name.split('.').pop() == 'png'">
+                                        <v-img height="50px" :src="fileURI+file.uri" class="image" @click="image_dialog = true; image = file.uri" v-bind="props"/>
+                                    </template>
+                                    <template v-else>
+                                        <v-btn height="100%" :href="fileURI+file.uri" v-bind="props" variant="text">
+                                            <v-icon large color="orange darken-2">
+                                                mdi-file
+                                            </v-icon>
+                                        </v-btn>
+                                    </template>
+                                </template>
+                                <span>{{file.name}}</span>
+                            </v-tooltip>
+                        </v-col>
+                    </template>
+                </v-row>
+
                 <v-container v-if="chall.pages[page].flag">
                     <v-text-field v-model="flag" label="Flag" :rules="[(v) => !!v || 'Flag is required']"></v-text-field>
                     <v-btn @click="submitFlag()" color="secondary">Envoyer</v-btn>
@@ -50,10 +78,13 @@ export default {
   data() {
     return {
         dialog: false,
+        image_dialog: false,
+        image: '',
         page: 0,
         flag: undefined,
         color: '',
         logInURI: `http://${process.env.VUE_APP_BACKEND_DOMAIN}:${process.env.VUE_APP_BACKEND_PORT}/api/login`,
+        fileURI: process.env.VUE_APP_BACKEND_URI+'/api/file/get/',
     }
   },
   mounted() {
@@ -98,6 +129,11 @@ export default {
 </script>
 
 <style>
+.image {
+    background-color: beige;
+    border-radius: 5px;
+}
+
 .notif {
   /* higher font size */
   font-size: 1.5em !important;

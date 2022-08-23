@@ -2,6 +2,7 @@ package models
 
 import (
 	"backend/db"
+	"os"
 )
 
 // title: '',
@@ -38,6 +39,8 @@ type ChallengePage struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	AskFlag     bool   `json:"flag"`
+
+	Files []*File `gorm:"foreignkey:PageID" json:"files"`
 }
 
 func (c *Challenge) Save() error {
@@ -60,7 +63,14 @@ func (p *ChallengePage) Delete() error {
 
 func (c *Challenge) Delete() error {
 	db.DB.Table("completions").Delete(&Completion{}, "chall_id = ?", c.ID)
+	db.DB.Table("files").Delete(&File{}, "page_id IN (SELECT id FROM challenge_pages WHERE challenge_id = ?)", c.ID)
 	db.DB.Table("challenge_pages").Delete(&ChallengePage{}, "challenge_id = ?", c.ID)
+
+	for _, p := range c.Pages {
+		for _, f := range p.Files {
+			os.Remove(f.URI)
+		}
+	}
 
 	tx := db.DB.Delete(c)
 	return tx.Error
@@ -69,6 +79,7 @@ func (c *Challenge) Delete() error {
 func GetAllChallenges() ([]*Challenge, error) {
 	var challenges []*Challenge
 	err := db.DB.
+		Preload("Pages.Files").
 		Preload("Pages").
 		//Where("id <= ?", jourJ)
 		Find(&challenges).Error
@@ -80,6 +91,7 @@ func GetChallenge(ID int) (*Challenge, error) {
 		ID: ID,
 	}
 	err := db.DB.
+		Preload("Pages.Files").
 		Preload("Pages").
 		//Where("id <= ?", jourJ)
 		Find(&challenge).Error

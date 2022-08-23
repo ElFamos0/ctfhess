@@ -67,11 +67,43 @@
               v-model="form.pages[page].description"
               label="Description de la page"
             ></v-textarea>
-            
+
+            <template v-for="p in form.pages.length+1" :key="p">
+              <v-file-input v-model="files[p-1]" v-if="p == page+1" class="mb-2" chips multiple></v-file-input>
+            </template>
+
             <v-checkbox
               v-model="form.pages[page].flag"
               label="Demande le flag ?"
             ></v-checkbox>
+
+            <v-row justify="center">
+              <template v-for="file in form.pages[page].files" :key="file">
+                <v-col cols="2">
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <div v-bind="props"  style="position:relative">
+                              <v-btn v-bind="props" variant="text" class="delete" @click="deleteFile(file.uri)">
+                                <v-icon large color="red darken-2">
+                                    mdi-delete
+                                </v-icon>
+                              </v-btn>
+                              <template v-if="file.name.split('.').pop() == 'jpeg' || file.name.split('.').pop() == 'jpg' || file.name.split('.').pop() == 'png'">
+                                <v-img height="50px" :src="fileURI+file.uri" class="image" @click="image_dialog = true; image = file.uri"/>
+                              </template>
+                              <template v-else>
+                                <v-spacer></v-spacer>
+                                <v-icon large color="orange darken-2">
+                                    mdi-file
+                                </v-icon>
+                              </template>
+                            </div>
+                        </template>
+                        <span>{{file.name}}</span>
+                    </v-tooltip>
+                </v-col>
+              </template>
+            </v-row>
           </v-card-text>
           <v-card-actions>
               <v-btn color="primary" @click="delPage()" :disabled="form.pages.length <= 1">
@@ -99,6 +131,7 @@
 </template>
 
 <script>
+import { getRequest } from "@/requests/getRequest";
 import { postRequest } from "@/requests/postRequest";
 export default {
   name: 'ChallView',
@@ -121,6 +154,7 @@ export default {
           },
         ],
       },
+      files : [[]],
       page: 0,
     }
   },
@@ -149,12 +183,25 @@ export default {
         this.$router.push('/')
       })
     },
-    validate() {
-      postRequest(this.form, '/chall/edit', 'json').then(() => {
-        this.$emit('close')
-        this.$router.push('/')
-      })
+    async validate() {
+      await postRequest(this.form, '/chall/edit', 'json');
+
+      let files = new FormData()
+      for (let i = 0; i < this.files.length; i++) {
+        let name = `files[${i}]`
+        for (let file of this.files[i]) {
+          files.append(name, file)
+        }
+      }
+
+      await postRequest(files, '/file/reupload/'+this.chall.id, 'file')
+      this.$router.push('/')
     },
+    deleteFile(name) {
+      getRequest('/file/delete/'+name, 'json').then(() => {
+        window.location.reload()
+      })
+    }
   },
 };
 </script>

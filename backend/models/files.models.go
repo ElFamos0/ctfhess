@@ -3,9 +3,10 @@ package models
 import "backend/db"
 
 type File struct {
-	ID   string `gorm:"primary_key" json:"id"`
-	Name string `gorm:"column:name" json:"name"`
-	Uri  string `gorm:"column:uri" json:"uri"`
+	ID     int    `gorm:"primary_key" json:"id"`
+	PageID int    `gorm:"column:page_id" json:"page_id"`
+	Name   string `gorm:"column:name" json:"name"`
+	URI    string `gorm:"column:uri" json:"uri"`
 }
 
 func (f *File) Save() error {

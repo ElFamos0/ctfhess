@@ -6,13 +6,14 @@ import (
 	"backend/models"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gofrs/uuid"
 )
 
-func createFile(ctx *gin.Context) {
+func reuploadFiles(ctx *gin.Context) {
 	form, err := ctx.MultipartForm()
 
 	if err != nil {
@@ -21,16 +22,16 @@ func createFile(ctx *gin.Context) {
 	}
 
 	// Get the last chall id
-	var challID int
-	tx := db.DB.Raw("SELECT id FROM challenges ORDER BY id DESC LIMIT 1").Scan(&challID)
-	if tx.Error != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error getting last chall id"})
+	cID := ctx.Param("id")
+	challID, err := strconv.Atoi(cID)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error converting id"})
 		return
 	}
 
 	// Get all the pages of the chall
 	var pages []models.ChallengePage
-	tx = db.DB.Where("challenge_id = ?", challID).Find(&pages)
+	tx := db.DB.Where("challenge_id = ?", challID).Find(&pages)
 	if tx.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error getting pages"})
 		return
@@ -68,6 +69,6 @@ func createFile(ctx *gin.Context) {
 	})
 }
 
-func RegisterCreateFile(router *gin.RouterGroup) {
-	router.POST("/upload", middlewares.EnsureAdmin(), createFile)
+func RegisterReuploadFiles(router *gin.RouterGroup) {
+	router.POST("/reupload/:id", middlewares.EnsureAdmin(), reuploadFiles)
 }

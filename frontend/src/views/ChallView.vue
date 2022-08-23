@@ -63,6 +63,10 @@
               label="Description de la page"
             ></v-textarea>
             
+            <template v-for="p in form.pages.length+1" :key="p">
+              <v-file-input v-model="files[p-1]" v-if="p == page+1" class="mb-2" chips multiple></v-file-input>
+            </template>
+
             <v-checkbox
               v-model="form.pages[page].flag"
               label="Demande le flag ?"
@@ -114,6 +118,7 @@ export default {
           },
         ],
       },
+      files : [[]],
       page: 0,
     }
   },
@@ -121,6 +126,7 @@ export default {
     addPage() {
       if (this.page == this.form.pages.length - 1) {
         this.form.pages.push({})
+        this.files.push([])
       }
       this.page++
     },
@@ -130,10 +136,20 @@ export default {
         this.page--
       }
     },
-    validate() {
-      postRequest(this.form, '/chall/create', 'json').then(() => {
-        this.$router.push('/')
-      })
+    async validate() {
+      await postRequest(this.form, '/chall/create', 'json')
+
+      let files = new FormData()
+      for (let i = 0; i < this.files.length; i++) {
+        let name = `files[${i}]`
+        for (let file of this.files[i]) {
+          files.append(name, file)
+        }
+      }
+
+      await postRequest(files, '/file/upload', 'file')
+
+      this.$router.push('/')
     },
   },
 };
