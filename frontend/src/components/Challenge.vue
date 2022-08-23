@@ -21,7 +21,7 @@
         </v-card-actions>
     </v-card>
     <v-dialog v-model="dialog" persistent max-width="50vw">
-        <v-card tonal v-if="dialog" width="500px">
+        <v-card tonal v-if="dialog" width="50vw">
             <v-card-title>
                 {{chall.pages[page].title}}
             </v-card-title>
