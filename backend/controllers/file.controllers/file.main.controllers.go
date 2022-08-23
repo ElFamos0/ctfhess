@@ -1,6 +1,14 @@
 package filecontrollers
 
-import "github.com/gin-gonic/gin"
+import (
+	"os"
+
+	"github.com/gin-gonic/gin"
+)
+
+func init() {
+	os.Mkdir("data", 0755)
+}
 
 func RegisterFileRoutes(router *gin.RouterGroup) {
 	RegisterCreateFile(router)

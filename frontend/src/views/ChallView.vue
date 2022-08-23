@@ -89,7 +89,7 @@
       </v-col>
 
       <v-col cols="6" class="text-center">
-        <v-btn color="primary" @click="validate()">
+        <v-btn color="primary" @click="validate()" :disabled="btnDisabled">
             Créer le challenge
         </v-btn>
       </v-col>
@@ -120,6 +120,7 @@ export default {
       },
       files : [[]],
       page: 0,
+      btnDisabled: false,
     }
   },
   methods: {
@@ -137,6 +138,7 @@ export default {
       }
     },
     async validate() {
+      this.btnDisabled = true
       await postRequest(this.form, '/chall/create', 'json')
 
       let files = new FormData()
