@@ -5,6 +5,7 @@ import ProfilView from "../views/ProfilView.vue";
 import ChallView from "../views/ChallView.vue";
 import EditChall from "../views/EditChall.vue";
 import Scoreboard from "../views/ScoreBoard.vue";
+import UploadView from "../views/UploadView.vue";
 
 const routes = [
     {
@@ -47,6 +48,15 @@ const routes = [
             title: 'Scoreboard',
         },
     },
+    {
+        path: "/upload",
+        name: "Upload",
+        component: UploadView,
+        meta: {
+            title: 'Upload',
+        },
+    },
+
 ];
 
 const router = createRouter({

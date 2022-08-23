@@ -2,6 +2,7 @@ package controllers
 
 import (
 	chall_controllers "backend/controllers/chall.controllers"
+	file_controllers "backend/controllers/file.controllers"
 	logincontrollers "backend/controllers/login.controllers"
 	"backend/controllers/middlewares.go"
 	users_controllers "backend/controllers/users.controllers"
@@ -20,11 +21,18 @@ func InitControllers(router *gin.RouterGroup) {
 	registerUsersLoggedInRoutes(router)
 
 	registerChallRoutes(router)
+
+	registerFileRoutes(router)
 }
 
 func registerChallRoutes(rg *gin.RouterGroup) {
 	routerGroup := rg.Group("/chall", middlewares.SetStatus())
 	chall_controllers.RegisterChallRoutes(routerGroup)
+}
+
+func registerFileRoutes(rg *gin.RouterGroup) {
+	routerGroup := rg.Group("/file", middlewares.SetStatus())
+	file_controllers.RegisterFileRoutes(routerGroup)
 }
 
 func registerUsersLoggedInRoutes(rg *gin.RouterGroup) {
