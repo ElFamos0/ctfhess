@@ -4,13 +4,13 @@
             {{chall.title}}
         </v-card-title>
         <v-card-subtitle>
-            <VueMarkdownIt :source="chall.subtitle"></VueMarkdownIt>{{chall.points}} Points
+            <VueMarkdownIt breaks :source="chall.subtitle"></VueMarkdownIt>{{chall.points}} Points
         </v-card-subtitle>
         <v-card-subtitle>
             {{chall.completions}} personnes ont réussis ce challenge.
         </v-card-subtitle>
         <v-card-text>
-            <VueMarkdownIt :source="chall.short_description"></VueMarkdownIt>
+            <VueMarkdownIt breaks :source="chall.short_description"></VueMarkdownIt>
         </v-card-text>
         <v-card-actions>
             <v-row justify="center">
@@ -26,7 +26,7 @@
                 {{chall.pages[page].title}}
             </v-card-title>
             <v-card-text>
-                <VueMarkdownIt :source="chall.pages[page].description" class="mb-4"></VueMarkdownIt>
+                <VueMarkdownIt breaks :source="chall.pages[page].description" class="mb-4"></VueMarkdownIt>
                 
                 <v-dialog v-model="image_dialog">
                     <v-card tonal v-if="dialog" width="500px">
