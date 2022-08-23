@@ -2,7 +2,14 @@
   <v-app>
     <v-app-bar density="compact">
       <template v-slot:prepend>
-        <v-tab to="/">{{navText}}</v-tab>
+        <v-tab to="/">
+          <div style="display:inline-block;vertical-align:top;" class="mr-4">
+            <img :src="require('@/assets/logo.png')" height="40"/>
+          </div>
+          <div style="display:inline-block;">
+            {{navText}}
+          </div>
+        </v-tab>
       </template>
 
       <template v-slot:append>

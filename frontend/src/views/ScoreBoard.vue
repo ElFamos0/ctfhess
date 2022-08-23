@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in users" :key="user">
+                <tr v-for="user in users" :key="user" :class="user.id == conn.user.id ? 'bg-orange-lighten-4' : ''">
                     <td>{{ user.name }}</td>
                     <td>{{ user.points }}</td>
                 </tr>
@@ -28,6 +28,7 @@
 import { getRequest } from "@/requests/getRequest";
 export default {
   name: "ScoreBoard",
+  props: ["conn"],
   data() {
     return {
         users :[],

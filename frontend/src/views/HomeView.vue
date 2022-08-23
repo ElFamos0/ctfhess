@@ -2,7 +2,7 @@
   <v-container>
     <notifications position="top center" classes="notif vue-notification"/>
     <v-row class="mb-5 mt-5" justify="center" v-for="c in challenges" :key="c">
-        <v-col cols="4" class="text-center" v-for="chall in c" :key="chall">
+        <v-col cols="3" class="text-center" v-for="chall in c" :key="chall">
           <template v-if="!chall.fake" >
             <chall :chall="chall" :conn="conn"> </chall>
           </template>

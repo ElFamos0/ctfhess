@@ -1,6 +1,7 @@
 package challcontrollers
 
 import (
+	"backend/db"
 	"backend/models"
 	"net/http"
 
@@ -36,6 +37,8 @@ func getAllChall(ctx *gin.Context) {
 					continue
 				}
 				L = append(L, c)
+				// Fill completions
+				db.DB.Model(&models.Completion{}).Where("chall_id = ?", c.ID).Count(&c.Completions)
 			}
 		}
 		challenges = append(challenges, L)

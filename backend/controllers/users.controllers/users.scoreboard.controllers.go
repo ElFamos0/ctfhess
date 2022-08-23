@@ -10,12 +10,14 @@ import (
 )
 
 type ScoreboardUsers struct {
+	ID     string `json:"id"`
 	Name   string `json:"name"`
 	Points int    `json:"points"`
 }
 
 func UserToScoreboardUser(user *models.User) *ScoreboardUsers {
 	return &ScoreboardUsers{
+		ID:     user.ID,
 		Name:   fmt.Sprintf("%s %s", user.Name, user.Surname),
 		Points: user.Points,
 	}

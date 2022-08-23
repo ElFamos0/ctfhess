@@ -1,14 +1,24 @@
 <template>    
-    <v-card height="100%" tonal @click="click()" :color="color">
+    <v-card height="100%" tonal @click="click()" :class="'d-flex flex-column ' + color">
         <v-card-title>
             {{chall.title}}
         </v-card-title>
         <v-card-subtitle>
             <VueMarkdownIt :source="chall.subtitle"></VueMarkdownIt>{{chall.points}} Points
         </v-card-subtitle>
+        <v-card-subtitle>
+            {{chall.completions}} personnes ont réussis ce challenge.
+        </v-card-subtitle>
         <v-card-text>
             <VueMarkdownIt :source="chall.short_description"></VueMarkdownIt>
         </v-card-text>
+        <v-card-actions>
+            <v-row justify="center">
+                <v-col cols="6" class="text-center">
+                    <p class="author">Proposé par : <b>{{chall.author}}</b></p>
+                </v-col>
+            </v-row>
+        </v-card-actions>
     </v-card>
     <v-dialog v-model="dialog" persistent max-width="50vw">
         <v-card tonal v-if="dialog" width="500px">
@@ -16,14 +26,20 @@
                 {{chall.pages[page].title}}
             </v-card-title>
             <v-card-text>
-                <VueMarkdownIt :source="chall.pages[page].description"></VueMarkdownIt>
+                <VueMarkdownIt :source="chall.pages[page].description" class="mb-4"></VueMarkdownIt>
                 
                 <v-dialog v-model="image_dialog">
                     <v-card tonal v-if="dialog" width="500px">
                         <v-img :src="fileURI+image" class="image"/>
                     </v-card>
                 </v-dialog>
-                <v-row justify="center">
+
+                <v-container v-if="chall.pages[page].flag" class="mb-4">
+                    <v-text-field v-model="flag" label="Flag" :rules="[(v) => !!v || 'Flag is required']"></v-text-field>
+                    <v-btn @click="submitFlag()" color="secondary">Envoyer</v-btn>
+                </v-container>
+
+                <v-row justify="center" class="mb-1">
                     <template v-for="file in chall.pages[page].files" :key="file">
                         <v-col cols="2">
                             <v-tooltip location="top">
@@ -45,10 +61,6 @@
                     </template>
                 </v-row>
 
-                <v-container v-if="chall.pages[page].flag">
-                    <v-text-field v-model="flag" label="Flag" :rules="[(v) => !!v || 'Flag is required']"></v-text-field>
-                    <v-btn @click="submitFlag()" color="secondary">Envoyer</v-btn>
-                </v-container>
             </v-card-text>
             <v-card-actions>
                 <v-btn color="secondary" @click="dialog = false">
@@ -91,7 +103,7 @@ export default {
     if (this.conn.logged && this.conn.user.completions) {
         for (let i = 0; i < this.conn.user.completions.length; i++) {
             if (this.chall.id == this.conn.user.completions[i].chall_id) {
-                this.color = 'green';
+                this.color = 'bg-green-darken-4';
                 break;
             }
         }
@@ -121,6 +133,9 @@ export default {
                     text:`GG ! Tu as gagnés ${this.chall.points} points!`,
                 });
                 this.color = 'green';
+                setTimeout(() => {
+                    this.$router.go();
+                }, 1000);
             }
         })
     },
@@ -129,6 +144,10 @@ export default {
 </script>
 
 <style>
+.author {
+    color:blanchedalmond;
+}
+
 .image {
     background-color: beige;
     border-radius: 5px;

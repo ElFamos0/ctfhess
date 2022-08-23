@@ -7,13 +7,19 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-col cols="6" class="text-center">
+      <v-col cols="4" class="text-center">
           <v-text-field
             v-model="form.title"
             label="Titre du challenge"
           ></v-text-field>
       </v-col>
-      <v-col cols="6" class="text-center">
+      <v-col cols="4" class="text-center">
+          <v-text-field
+            v-model="form.author"
+            label="Auteur du challenge"
+          ></v-text-field>
+      </v-col>
+      <v-col cols="4" class="text-center">
           <v-text-field
             v-model="form.subtitle"
             label="Sous-titre / Catégorie du challenge"
@@ -82,14 +88,14 @@
                 <v-col cols="2">
                     <v-tooltip location="top">
                         <template v-slot:activator="{ props }">
-                            <div v-bind="props"  style="position:relative">
+                            <div v-bind="props" style="position:relative">
                               <v-btn v-bind="props" variant="text" class="delete" @click="deleteFile(file.uri)">
                                 <v-icon large color="red darken-2">
                                     mdi-delete
                                 </v-icon>
                               </v-btn>
                               <template v-if="file.name.split('.').pop() == 'jpeg' || file.name.split('.').pop() == 'jpg' || file.name.split('.').pop() == 'png'">
-                                <v-img height="50px" :src="fileURI+file.uri" class="image" @click="image_dialog = true; image = file.uri"/>
+                                <v-img height="50px" :src="fileURI+file.uri" class="image"/>
                               </template>
                               <template v-else>
                                 <v-spacer></v-spacer>
@@ -141,6 +147,7 @@ export default {
       form: {
         id: '',
         title: '',
+        author: '',
         subtitle: '',
         short_description: '',
         day_open: 0,
@@ -157,6 +164,7 @@ export default {
       files : [[]],
       page: 0,
       btnDisabled: false,
+      fileURI: process.env.VUE_APP_BACKEND_URI+'/api/file/get/',
     }
   },
   mounted() {

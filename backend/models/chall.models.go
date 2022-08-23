@@ -22,6 +22,7 @@ import (
 type Challenge struct {
 	ID               int    `gorm:"primary_key" json:"id"`
 	Title            string `json:"title"`
+	Author           string `json:"author"`
 	Subtitle         string `json:"subtitle"`
 	ShortDescription string `json:"short_description"`
 	Flag             string `json:"flag"`
@@ -29,7 +30,8 @@ type Challenge struct {
 	Points           int    `json:"points"`
 	Fake             bool   `gorm:"-" json:"fake"`
 
-	Pages []*ChallengePage `gorm:"foreignkey:ChallengeID" json:"pages"` // Il faut preload avec le bon ordre (ID asc)
+	Pages       []*ChallengePage `gorm:"foreignkey:ChallengeID" json:"pages"` // Il faut preload avec le bon ordre (ID asc)
+	Completions int64            `gorm:"-" json:"completions"`
 }
 
 type ChallengePage struct {

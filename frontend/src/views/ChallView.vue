@@ -2,13 +2,19 @@
   <v-container>
     <h2 class="mb-5">Création de chall oklm</h2>
     <v-row justify="center">
-      <v-col cols="6" class="text-center">
+      <v-col cols="4" class="text-center">
           <v-text-field
             v-model="form.title"
             label="Titre du challenge"
           ></v-text-field>
       </v-col>
-      <v-col cols="6" class="text-center">
+      <v-col cols="4" class="text-center">
+          <v-text-field
+            v-model="form.author"
+            label="Auteur du challenge"
+          ></v-text-field>
+      </v-col>
+      <v-col cols="4" class="text-center">
           <v-text-field
             v-model="form.subtitle"
             label="Sous-titre / Catégorie du challenge"
@@ -106,6 +112,7 @@ export default {
       form: {
         title: '',
         subtitle: '',
+        author: '',
         short_description: '',
         day_open: 0,
         flag: '',
