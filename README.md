@@ -18,3 +18,10 @@ cd backend
 go mod download
 go run main.go
 ```
+
+## Setup Docker
+
+```bash
+sudo docker-compose build
+sudo docker-compose up
+```
