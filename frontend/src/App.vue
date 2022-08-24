@@ -32,9 +32,27 @@
     <v-main>
       <router-view :conn="conn"></router-view>
     </v-main>
+
+    <v-footer app fixed>
+    <v-col
+      class="text-center"
+      cols="12"
+    >
+    <v-btn :href="gitlabURL" target="_self" icon>
+        <v-icon>mdi-gitlab</v-icon>
+      </v-btn>
+
+      <strong>Fait avec ❤️ par Malo et Tristan</strong> 
+      <v-btn :href="discordURI" target="_self" icon>
+        <v-icon>mdi-discord</v-icon>
+      </v-btn>
+    </v-col>
+  </v-footer>
+
   </v-app>
   <!-- <HomeView v-if="!loggedIn" /> -->
   <!-- <LoginView v-else /> -->
+
 </template>
 
 <script>
@@ -52,6 +70,8 @@ export default {
       },
       logInURI: `${process.env.VUE_APP_BACKEND_URI}/api/login`,
       logOutURI: `${process.env.VUE_APP_BACKEND_URI}/api/logout`,
+      discordURI: "https://discord.gg/zmP6p2xzGs",
+      gitlabURL: "https://gitlab.com/malob/malob-ctf",
       navText: '',
     }; 
   },
