@@ -2,11 +2,16 @@ package models
 
 import (
 	"backend/db"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type Completion struct {
-	ChallID int    `gorm:"primary_key;column:chall_id" json:"chall_id"`
-	UserID  string `gorm:"primary_key;column:user_id" json:"user_id"`
+	gorm.Model
+	ChallID   int    `gorm:"primary_key;column:chall_id" json:"chall_id"`
+	UserID    string `gorm:"primary_key;column:user_id" json:"user_id"`
+	CreatedAt time.Time
 
 	Challenge *Challenge `gorm:"-" json:"challenge"`
 }

@@ -1,7 +1,17 @@
 <template>
     <v-container>
         <h1>Tableau des scores</h1>
-    </v-container>
+    </v-container> 
+    <v-row justify="center"> 
+        <v-col cols="4">
+            <Suspense>
+                <graph class="chart"></graph>
+                <template #fallback>
+                    Loading...
+                </template>
+            </Suspense>
+        </v-col>
+    </v-row> 
     <v-container>
         <v-table>
             <thead>
@@ -25,10 +35,14 @@
 </template>
 
 <script>
+import Graph from "@/components/Graph.vue";
 import { getRequest } from "@/requests/getRequest";
 export default {
   name: "ScoreBoard",
   props: ["conn"],
+  components: {
+    Graph,
+  },
   data() {
     return {
         users :[],
@@ -36,8 +50,15 @@ export default {
   },
   async created () {
     await getRequest('/users/scoreboard','json').then((res) =>{
-      this.users = res.data
+        this.users = res.data
     })
   },
 };
 </script>
+
+<style scoped>
+.chart {
+    max-height: 30vh;
+    max-width: 40vw;
+}
+</style>
