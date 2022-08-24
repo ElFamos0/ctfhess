@@ -34,18 +34,29 @@
     </v-main>
 
     <v-footer app fixed height="50pw">
-    <v-col
-      class="text-center"
-      cols="12"
-    >
-    <v-btn :href="gitlabURL" target="_self" icon variant="text">
+    <v-col class="text-center" cols="12">
+      <v-btn :href="gitlabURL" target="_self" icon variant="text">
         <v-icon>mdi-gitlab</v-icon>
       </v-btn>
 
       <strong>Fait avec ❤️ par Malo et Tristan</strong> 
-      <v-btn :href="discordURI" target="_self" icon variant="text">
-        <v-icon>mdi-discord</v-icon>
-      </v-btn>
+
+      <v-tooltip location="top">
+        <template v-slot:activator="{ props }">
+          <v-btn v-bind="props" href="https://discord.gg/zmP6p2xzGs" target="_self" icon variant="text">
+            <v-icon>mdi-discord</v-icon>
+          </v-btn>
+        </template>
+        <span>Hackin'TN</span>
+      </v-tooltip>
+      <v-tooltip location="top">
+        <template v-slot:activator="{ props }">
+          <v-btn v-bind="props" href="https://discord.gg/MYKJgcCZXZ" target="_self" icon variant="text">
+            <v-icon>mdi-discord</v-icon>
+          </v-btn>
+        </template>
+        <span>Algo</span>
+      </v-tooltip>
     </v-col>
   </v-footer>
 
@@ -70,7 +81,6 @@ export default {
       },
       logInURI: `${process.env.VUE_APP_BACKEND_URI}/api/login`,
       logOutURI: `${process.env.VUE_APP_BACKEND_URI}/api/logout`,
-      discordURI: "https://discord.gg/zmP6p2xzGs",
       gitlabURL: "",
       navText: '',
     }; 

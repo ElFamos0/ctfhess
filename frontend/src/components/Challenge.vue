@@ -95,7 +95,7 @@ export default {
         page: 0,
         flag: undefined,
         color: '',
-        logInURI: `http://${process.env.VUE_APP_BACKEND_DOMAIN}:${process.env.VUE_APP_BACKEND_PORT}/api/login`,
+        logInURI: `${process.env.VUE_APP_BACKEND_URI}/api/login`,
         fileURI: process.env.VUE_APP_BACKEND_URI+'/api/file/get/',
     }
   },
