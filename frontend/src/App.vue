@@ -33,7 +33,7 @@
       <router-view :conn="conn"></router-view>
     </v-main>
 
-    <v-footer app fixed>
+    <v-footer app fixed height="50pw">
     <v-col
       class="text-center"
       cols="12"
@@ -71,7 +71,7 @@ export default {
       logInURI: `${process.env.VUE_APP_BACKEND_URI}/api/login`,
       logOutURI: `${process.env.VUE_APP_BACKEND_URI}/api/logout`,
       discordURI: "https://discord.gg/zmP6p2xzGs",
-      gitlabURL: "https://gitlab.com/malob/malob-ctf",
+      gitlabURL: "",
       navText: '',
     }; 
   },
