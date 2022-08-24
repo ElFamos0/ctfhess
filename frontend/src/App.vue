@@ -38,12 +38,12 @@
       class="text-center"
       cols="12"
     >
-    <v-btn :href="gitlabURL" target="_self" icon>
+    <v-btn :href="gitlabURL" target="_self" icon variant="text">
         <v-icon>mdi-gitlab</v-icon>
       </v-btn>
 
       <strong>Fait avec ❤️ par Malo et Tristan</strong> 
-      <v-btn :href="discordURI" target="_self" icon>
+      <v-btn :href="discordURI" target="_self" icon variant="text">
         <v-icon>mdi-discord</v-icon>
       </v-btn>
     </v-col>
@@ -107,5 +107,9 @@ export default {
   color: #362c50;
   margin-left: auto;
   margin-right: auto;
+}
+
+html{
+    overflow-y: overlay;
 }
 </style>
