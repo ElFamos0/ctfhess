@@ -9,7 +9,7 @@
             </v-card>
         </v-dialog>
         <v-row class="mb-5 mt-5" justify="center" v-for="c in challenges" :key="c">
-            <v-col cols="4" class="text-center" v-for="chall in c" :key="chall">
+            <v-col cols="3" class="text-center" v-for="chall in c" :key="chall">
                 <v-card class="d-flex flex-column" height="100%" tonal @click="dialog = true; challenge = chall;">
                     <v-card-title>
                         {{chall.title}}

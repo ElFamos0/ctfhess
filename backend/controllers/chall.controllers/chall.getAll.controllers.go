@@ -20,6 +20,19 @@ var (
 )
 
 func getAllChall(ctx *gin.Context) {
+	var logged bool
+	var admin bool
+
+	logged = ctx.GetBool("is_logged_in")
+	if logged {
+		u, found := ctx.Get("user")
+		if found {
+			if u.(*models.User).Type == models.AdminUser {
+				admin = true
+			}
+		}
+	}
+
 	c, err := models.GetAllChallenges()
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error getting challenges"})
@@ -32,7 +45,7 @@ func getAllChall(ctx *gin.Context) {
 		for _, c := range c {
 			c.Flag = ""
 			if c.OpensAt == day {
-				if day > currentDay {
+				if day > currentDay && !admin {
 					L = append(L, fakeChall)
 					continue
 				}
