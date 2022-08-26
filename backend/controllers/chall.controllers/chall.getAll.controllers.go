@@ -13,7 +13,7 @@ const (
 )
 
 var (
-	currentDay = 1
+	currentDay = -1
 	fakeChall  = &models.Challenge{
 		Fake: true,
 	}
