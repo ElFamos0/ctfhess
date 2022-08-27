@@ -6,6 +6,7 @@ import ChallView from "../views/ChallView.vue";
 import EditChall from "../views/EditChall.vue";
 import Scoreboard from "../views/ScoreBoard.vue";
 import UploadView from "../views/UploadView.vue";
+import AdminView from "../views/AdminView.vue";
 
 const routes = [
     {
@@ -56,6 +57,14 @@ const routes = [
             title: 'Upload',
         },
     },
+    {
+      path: "/admin",
+      name: "Admin",
+      component: AdminView,
+      meta: {
+          title: 'Admin Panel'
+      },
+    }
 
 ];
 

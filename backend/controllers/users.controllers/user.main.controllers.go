@@ -7,4 +7,5 @@ func RegisterUserRoutes(router *gin.RouterGroup) {
 	RegisterUserControllersGet(router)
 	RegisterScoreboardControllersGet(router)
 	RegisterGraphControllersGet(router)
+	RegisterUserControllersAdmin(router)
 }

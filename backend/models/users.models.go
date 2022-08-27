@@ -54,3 +54,23 @@ func (u *User) GetPoints() (pt int) {
 
 	return pt
 }
+
+func GetAdminList() (admins []*User) {
+	db.DB.Find(&admins, "type = ?", 1)
+	return
+}
+
+func GetUserList() (users []*User) {
+	db.DB.Find(&users, "type = ?", 0)
+	return
+}
+
+func (u *User) MakeAdmin() {
+	u.Type = AdminUser
+	u.Save()
+}
+
+func GetUserByID(id string) (user *User) {
+	db.DB.First(&user, "id = ?", id)
+	return
+}
