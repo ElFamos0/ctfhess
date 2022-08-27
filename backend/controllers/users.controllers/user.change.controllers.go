@@ -25,5 +25,5 @@ func UserAdmin(ctx *gin.Context) {
 }
 
 func RegisterUserControllersAdmin(router *gin.RouterGroup) {
-	router.POST("/makeadmin", middlewares.EnsureAdmin(), UserAdmin)
+	router.POST("/add", middlewares.EnsureAdmin(), UserAdmin)
 }

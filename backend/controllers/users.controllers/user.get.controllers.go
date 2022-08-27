@@ -33,5 +33,5 @@ func GetAllUsers(ctx *gin.Context) {
 func RegisterUserControllersGet(router *gin.RouterGroup) {
 	router.GET("/data", GetUser)
 	router.GET("/admins", middlewares.EnsureAdmin(), GetAllAdmins)
-	router.GET("/listusers", middlewares.EnsureAdmin(), GetAllUsers)
+	router.GET("/list", middlewares.EnsureAdmin(), GetAllUsers)
 }

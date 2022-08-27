@@ -63,7 +63,7 @@ export default {
         getRequest('/users/admins').then((res) => {
             this.adminMembers = res.data;
         });
-        getRequest('/users/listusers').then((res) => {
+        getRequest('/users/list').then((res) => {
             this.bruteusers = res.data;
             }
         );
@@ -85,7 +85,7 @@ export default {
         },
         addAdmin() {
             console.log(this.selectedAdmin.id);
-            postRequest({id:this.selectedAdmin.id}, '/users/makeadmin','json').then((res) => {
+            postRequest({id:this.selectedAdmin.id}, '/users/add','json').then((res) => {
                 console.log(res);
                 this.$router.push('/');
             });
