@@ -90,11 +90,11 @@ func GetGraph(ctx *gin.Context) {
 	for _, user := range graph {
 		user.Graph = make([]int, len(days))
 		for i, day := range days {
+			if i > 0 {
+				user.Graph[i] = user.Graph[i-1]
+			}
 			for _, completion := range user.RawUser.Completions {
 				if completion.CreatedAt.Format("02 Jan") == day {
-					if i > 0 {
-						user.Graph[i] = user.Graph[i-1]
-					}
 					user.Graph[i] += completion.Challenge.Points
 				}
 			}
