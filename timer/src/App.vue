@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <video-bg class="video" :sources="[require('./assets/video.mp4')]">
-        <v-container class="centered" v-if="secondes > 0">
+        <v-container class="centered" v-if="secondes >= 0">
           <v-row justify="center">
             <v-col cols="12">
               <h1 class="title text-center">
@@ -11,7 +11,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" class="margin">
-            <v-col cols="3">
+            <v-col cols="12" md="3">
               <v-card variant="plain" style="background: #0000;">
                 <v-card-text class="text-center card">
                   {{jours}}
@@ -21,7 +21,7 @@
                 </v-card-text>
               </v-card>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="12" md="3">
               <v-card variant="plain" style="background: #0000;">
                 <v-card-text class="text-center card">
                   {{heures}}
@@ -31,7 +31,7 @@
                 </v-card-text>
               </v-card>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="12" md="3">
               <v-card variant="plain" style="background: #0000;">
                 <v-card-text class="text-center card">
                   {{minutes}}
@@ -41,7 +41,7 @@
                 </v-card-text>
               </v-card>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="12" md="3">
               <v-card variant="plain" style="background: #0000;">
                 <v-card-text class="text-center card">
                   {{secondes}}
@@ -128,7 +128,7 @@ video {
 }
 
 .title {
-  font-size: 5vh;
+  font-size: 5vw;
   color:white;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
@@ -139,6 +139,6 @@ video {
 }
 
 .margin {
-  margin-top:50px;
+  margin-top:1vh;
 }
 </style>
