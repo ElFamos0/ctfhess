@@ -16,7 +16,7 @@ func getAllChallAdmin(ctx *gin.Context) {
 	}
 
 	var challenges [][]*models.Challenge
-	for day := 0; day < MAXDAY; day++ {
+	for day := 0; day < maxday; day++ {
 		var L []*models.Challenge
 		for _, c := range c {
 			if c.OpensAt == day {
@@ -27,7 +27,7 @@ func getAllChallAdmin(ctx *gin.Context) {
 	}
 
 	// remove last empty days
-	for day := MAXDAY - 1; day >= 0; day-- {
+	for day := maxday - 1; day >= 0; day-- {
 		if len(challenges[day]) == 0 {
 			challenges = challenges[:day]
 		} else {
