@@ -196,6 +196,8 @@ export default {
       this.btnDisabled = true
       await postRequest(this.form, '/chall/edit', 'json');
 
+      if (this.files.length == 0) this.$router.push('/')
+
       let files = new FormData()
       for (let i = 0; i < this.files.length; i++) {
         let name = `files[${i}]`

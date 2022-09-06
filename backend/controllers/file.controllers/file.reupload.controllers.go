@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gofrs/uuid"
@@ -46,7 +45,7 @@ func reuploadFiles(ctx *gin.Context) {
 				return
 			}
 
-			filename := fmt.Sprintf("%s.%s", newName.String(), file.Filename[strings.LastIndex(file.Filename, ".")+1:])
+			filename := fmt.Sprintf("%s_%s", newName.String(), file.Filename)
 
 			err = ctx.SaveUploadedFile(file, "data/"+filename)
 			if err != nil {
