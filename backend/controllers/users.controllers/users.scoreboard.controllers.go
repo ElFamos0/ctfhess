@@ -5,6 +5,7 @@ import (
 	"backend/models"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,6 +16,10 @@ type ScoreboardUsers struct {
 	Points int    `json:"points"`
 }
 
+var (
+	premiereAnnee = os.Getenv("PROMO_1A")
+)
+
 func UserToScoreboardUser(user *models.User) *ScoreboardUsers {
 	return &ScoreboardUsers{
 		ID:     user.ID,
@@ -24,11 +29,22 @@ func UserToScoreboardUser(user *models.User) *ScoreboardUsers {
 }
 
 func GetScoreboard(ctx *gin.Context) {
+	promo := ctx.Param("promo")
+
 	u := []*models.User{}
-	db.DB.
-		//Preload("Completions.Challenge").
-		Preload("Completions").
-		Find(&u)
+	switch promo {
+	case "all":
+		db.DB.
+			//Preload("Completions.Challenge").
+			Preload("Completions").
+			Find(&u)
+	default:
+		db.DB.
+			//Preload("Completions.Challenge").
+			Preload("Completions").
+			Where("promo = ?", premiereAnnee).
+			Find(&u)
+	}
 
 	var scoreboard []*ScoreboardUsers
 	// Insert users in the scoreboard ordering by points
@@ -57,5 +73,5 @@ func GetScoreboard(ctx *gin.Context) {
 }
 
 func RegisterScoreboardControllersGet(router *gin.RouterGroup) {
-	router.GET("/scoreboard", GetScoreboard)
+	router.GET("/scoreboard/:promo", GetScoreboard)
 }

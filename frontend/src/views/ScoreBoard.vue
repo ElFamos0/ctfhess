@@ -4,14 +4,25 @@
     </v-container> 
     <v-row justify="center"> 
         <v-col cols="4">
-            <Suspense>
-                <graph class="chart"></graph>
+            <Suspense v-if="graphActivated">
+                <graph :promo="promo" class="chart"></graph>
                 <template #fallback>
-                    Loading...
+                    Pas de données.
                 </template>
             </Suspense>
         </v-col>
     </v-row> 
+    <v-container>
+
+    <v-row justify="center"> 
+        <v-col cols="6">
+            <v-btn :disabled="inte" @click="swap()">Classement 1A</v-btn>
+        </v-col>
+        <v-col cols="6">
+            <v-btn :disabled="general" @click="swap()">Classement Général</v-btn>
+        </v-col>
+    </v-row> 
+    </v-container>
     <v-container>
         <v-table>
             <thead>
@@ -31,6 +42,7 @@
                 </tr>
             </tbody>
         </v-table>
+        <p v-if="users.length == 0">Aucun utilisateurs..</p>
     </v-container>
 </template>
 
@@ -46,12 +58,47 @@ export default {
   data() {
     return {
         users :[],
+        general: false,
+        inte: true,
+        graphActivated: true,
+        promo: "1a",
     }
   },
   async created () {
-    await getRequest('/users/scoreboard','json').then((res) =>{
-        this.users = res.data
+    await getRequest('/users/scoreboard/'+this.promo,'json').then((res) =>{
+        if (!res.data) {
+            this.users = []
+        } else {
+            this.users = res.data
+        }
     })
+  },
+  methods: {
+    async swap() {
+        this.graphActivated = false
+        this.general = !this.general;
+        this.inte = !this.inte;
+        if (this.general) {
+            this.promo = "all";
+            await getRequest('/users/scoreboard/'+this.promo,'json').then((res) =>{
+                if (!res.data) {
+                    this.users = []
+                } else {
+                    this.users = res.data
+                }
+            })
+        } else {
+            this.promo = "1a";
+            await getRequest('/users/scoreboard/'+this.promo,'json').then((res) =>{
+                if (!res.data) {
+                    this.users = []
+                } else {
+                    this.users = res.data
+                }
+            })
+        }
+        this.graphActivated = true
+    },
   },
 };
 </script>

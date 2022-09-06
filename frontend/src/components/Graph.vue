@@ -10,8 +10,14 @@ export default {
   components: {
     Vue3ChartJs
   },
-  async setup() {
-    const res = await getRequest('/users/graph','json')
+  props: {
+    promo: {
+      type: String,
+      default: "1a"
+    }
+  },
+  async setup(props) {
+    const res = await getRequest('/users/graph/'+props.promo,'json')
     const lines = {
         type:'line',
         data : {

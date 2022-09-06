@@ -34,11 +34,22 @@ func UserToGraphUser(user *models.User) *GraphUsers {
 }
 
 func GetGraph(ctx *gin.Context) {
+	promo := ctx.Param("promo")
+
 	u := []*models.User{}
-	db.DB.
-		//Preload("Completions.Challenge").
-		Preload("Completions").
-		Find(&u)
+	switch promo {
+	case "all":
+		db.DB.
+			//Preload("Completions.Challenge").
+			Preload("Completions").
+			Find(&u)
+	default:
+		db.DB.
+			//Preload("Completions.Challenge").
+			Preload("Completions").
+			Where("promo = ?", premiereAnnee).
+			Find(&u)
+	}
 
 	var times []time.Time
 	db.DB.
@@ -52,6 +63,8 @@ func GetGraph(ctx *gin.Context) {
 	for _, t := range times {
 		f := t.Format("02 Jan")
 		if len(days) == 0 {
+			// On ajoute le jour d'avant pour le point 0
+			days = append(days, t.Add(-24*time.Hour).Format("02 Jan"))
 			days = append(days, f)
 		} else if days[len(days)-1] != f {
 			days = append(days, f)
@@ -110,5 +123,5 @@ func GetGraph(ctx *gin.Context) {
 }
 
 func RegisterGraphControllersGet(router *gin.RouterGroup) {
-	router.GET("/graph", GetGraph)
+	router.GET("/graph/:promo", GetGraph)
 }
