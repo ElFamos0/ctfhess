@@ -34,7 +34,7 @@ func completeChall(ctx *gin.Context) {
 	}
 
 	u := ctx.MustGet("user")
-	user := u.(models.User)
+	user := u.(*models.User)
 
 	for _, compl := range user.Completions {
 		if compl.ChallID == chall.ID {
