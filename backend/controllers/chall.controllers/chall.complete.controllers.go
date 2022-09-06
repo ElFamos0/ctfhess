@@ -32,6 +32,16 @@ func completeChall(ctx *gin.Context) {
 		return
 	}
 
+	u := ctx.MustGet("user")
+	user := u.(models.User)
+
+	for _, compl := range user.Completions {
+		if compl.ChallID == chall.ID {
+			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"error": "You already did that."})
+			return
+		}
+	}
+
 	c := &models.Completion{
 		ChallID: req.ID,
 		UserID:  ctx.GetString("user_id"),
