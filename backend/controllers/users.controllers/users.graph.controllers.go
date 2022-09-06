@@ -42,11 +42,13 @@ func GetGraph(ctx *gin.Context) {
 		db.DB.
 			//Preload("Completions.Challenge").
 			Preload("Completions").
+			Order("last_submission DESC").
 			Find(&u)
 	default:
 		db.DB.
 			//Preload("Completions.Challenge").
 			Preload("Completions").
+			Order("last_submission DESC").
 			Where("promo = ?", premiereAnnee).
 			Find(&u)
 	}

@@ -5,6 +5,7 @@ import (
 	"backend/db"
 	"backend/models"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -35,6 +36,8 @@ func completeChall(ctx *gin.Context) {
 
 	u := ctx.MustGet("user")
 	user := u.(*models.User)
+	user.LastSubmission = time.Now()
+	user.Save()
 
 	for _, compl := range user.Completions {
 		if compl.ChallID == chall.ID {
