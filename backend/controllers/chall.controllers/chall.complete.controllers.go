@@ -2,6 +2,7 @@ package challcontrollers
 
 import (
 	"backend/controllers/middlewares.go"
+	"backend/db"
 	"backend/models"
 	"net/http"
 
@@ -48,6 +49,24 @@ func completeChall(ctx *gin.Context) {
 	}
 
 	c.Save()
+
+	go func() {
+		var done []int
+		for _, compl := range user.Completions {
+			var found bool
+			for _, id := range done {
+				if compl.ChallID == id {
+					found = true
+					break
+				}
+			}
+			if found {
+				db.DB.Delete(&compl)
+			} else {
+				done = append(done, compl.ChallID)
+			}
+		}
+	}()
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "ok",

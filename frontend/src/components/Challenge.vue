@@ -36,7 +36,7 @@
 
                 <v-container v-if="chall.pages[page].flag" class="mb-4">
                     <v-text-field v-model="flag" label="Flag" :rules="[(v) => !!v || 'Flag is required']"></v-text-field>
-                    <v-btn @click="submitFlag()" color="secondary">Envoyer</v-btn>
+                    <v-btn @click="submitFlag()" color="secondary" :disabled="disableFlag">Envoyer</v-btn>
                 </v-container>
 
                 <v-row justify="center" class="mb-1">
@@ -95,6 +95,7 @@ export default {
         page: 0,
         flag: undefined,
         color: '',
+        disableFlag: false,
         logInURI: `${process.env.VUE_APP_BACKEND_URI}/api/login`,
         fileURI: process.env.VUE_APP_BACKEND_URI+'/api/file/get/',
     }
@@ -118,6 +119,7 @@ export default {
         }
     },
     submitFlag() {
+        this.disableFlag = true;
         let data = {
             id: this.chall.id,
             flag: this.flag,
@@ -128,6 +130,7 @@ export default {
                 this.$notify({
                     text:data.data.error,
                 });
+                this.disableFlag = false;
             } else {
                 this.$notify({
                     text:`GG ! Tu as gagnés ${this.chall.points} points!`,
