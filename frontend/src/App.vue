@@ -14,6 +14,7 @@
 
       <template v-slot:append>
         <template v-if="conn.user">
+          <v-btn to="/admin" prepend-icon="mdi-badge-account-horizontal" v-if="conn.user.type==1">Admins</v-btn>
           <v-btn to="/edit" prepend-icon="mdi-pen" v-if="conn.user.type==1">Edition</v-btn>
           <v-btn to="/chall" prepend-icon="mdi-plus" v-if="conn.user.type==1">Creation</v-btn>
         </template>

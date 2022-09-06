@@ -70,6 +70,11 @@ func (u *User) MakeAdmin() {
 	u.Save()
 }
 
+func (u *User) MakeNormal() {
+	u.Type = NormalUser
+	u.Save()
+}
+
 func GetUserByID(id string) (user *User) {
 	db.DB.First(&user, "id = ?", id)
 	return

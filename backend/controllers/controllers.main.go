@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	admin_controllers "backend/controllers/admin.controllers"
 	chall_controllers "backend/controllers/chall.controllers"
 	file_controllers "backend/controllers/file.controllers"
 	logincontrollers "backend/controllers/login.controllers"
@@ -23,6 +24,8 @@ func InitControllers(router *gin.RouterGroup) {
 	registerChallRoutes(router)
 
 	registerFileRoutes(router)
+
+	registerAdminRoutes(router)
 }
 
 func registerChallRoutes(rg *gin.RouterGroup) {
@@ -38,6 +41,11 @@ func registerFileRoutes(rg *gin.RouterGroup) {
 func registerUsersLoggedInRoutes(rg *gin.RouterGroup) {
 	routerGroup := rg.Group("/users", middlewares.SetStatus(), middlewares.EnsureLoggedIn())
 	users_controllers.RegisterUserRoutes(routerGroup)
+}
+
+func registerAdminRoutes(rg *gin.RouterGroup) {
+	routerGroup := rg.Group("/admin", middlewares.SetStatus(), middlewares.EnsureLoggedIn(), middlewares.EnsureAdmin())
+	admin_controllers.RegisterAdminRoutes(routerGroup)
 }
 
 func registerLoginRoutes(rg *gin.RouterGroup) {

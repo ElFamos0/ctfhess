@@ -1,40 +1,40 @@
 <template>
 <v-container>
-        <h1>ADMIN PAGE</h1>
         <v-card v-if="conn.user.type==0">
             <v-card-title>
-                <h2>Voici un petit flag HTN{j3_suis_4dm1n?}</h2>
+                <h2>Gestions des administrateurs</h2>
             </v-card-title>
-            </v-card>
-        <v-card v-if="conn.user.type==1">
-            <v-card-title>Liste admin </v-card-title>
-                <v-row class="mb-2 mt-2" justify="center" v-for="a in adminMembers" :key="a">
-                    <h1>{{a.surname}} {{a.name}}</h1>
+            <v-card-title>
+                <h4>Voici un petit flag HTN{j3_suis_4dm1n?}</h4>
+            </v-card-title>
+        </v-card>
+        <v-card>
+            <v-card-title>
+                <h2>Gestions des administrateurs</h2>
+            </v-card-title>
+            <v-card-text>
+                <v-row>
+                    <v-col cols="6">
+                        <h3 class="mb-5">Admins</h3>
+                        <v-row class="mb-2 mt-2" justify="center" v-for="a in adminMembers" :key="a">
+                            <h4>{{a.surname}} {{a.name}}</h4>
+                            <v-icon large color="red darken-2" @click="remAdmin(a)">
+                                mdi-delete
+                            </v-icon>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="6">
+                        <h3 class="mb-5">Utilisateurs</h3>
+                        <v-row class="mb-2 mt-2" justify="center" v-for="u in bruteusers" :key="u">
+                            <v-icon large color="green darken-2" @click="addAdmin(u)">
+                                mdi-arrow-left
+                            </v-icon>
+                            <h4>{{u.surname}} {{u.name}}</h4>
+                        </v-row>
+                    </v-col>
                 </v-row>
+            </v-card-text>
         </v-card>
-        <v-card v-if="conn.user.type==1">
-            <v-card-title>Ajout ADMIN</v-card-title>
-            <v-row class="mb-2 mt-2" justify="center">
-                <v-col cols="12" sm="6" md="4">
-                    <!-- On change execute add with e -->
-                    <v-autocomplete
-                        v-model="selectedAdmin"
-                        :items="bruteusers"
-                        :item-title="item => item.surname + ' ' + item.name"
-                        return-object
-                        label="User"
-                        single-line
-                        clearable
-                        @click:clear ="deleteselected"
-                        @input="add"
-                        >
-                    </v-autocomplete>
-                </v-col>
-            </v-row>
-        </v-card>
-
-        <v-btn v-if="conn.user.type==1" @click="addAdmin">Ajouter</v-btn>
-
 </v-container>
 
 </template>
@@ -44,14 +44,13 @@
 <script>
 import { getRequest } from "@/requests/getRequest";
 import { postRequest } from "@/requests/postRequest";
-import { loggedIn } from "@/auth/loggedIn";
 export default {
     name: 'AdminView',
     data() {
         return {
             conn : {
-            logged: false,
-            user: {},
+                logged: false,
+                user: {},
             },
             adminMembers: null,
             users: [],
@@ -60,34 +59,26 @@ export default {
         }
     },
     mounted() {
-        getRequest('/users/admins').then((res) => {
-            this.adminMembers = res.data;
-        });
-        getRequest('/users/list').then((res) => {
-            this.bruteusers = res.data;
-            }
-        );
-        loggedIn().then(data => {
-        this.conn.logged = data.logged;
-        this.conn.user = data.user;
-        });
+        this.update();
     },
-
-
     methods: {
-        add(e) {
-            console.log("add");
-            this.selectedAdmin = e;
-            console.log(this.selectedAdmin);
+        update() {
+            getRequest('/admin/get').then((res) => {
+                this.adminMembers = res.data;
+            });
+            getRequest('/users/list').then((res) => {
+                this.bruteusers = res.data;
+                }
+            );
         },
-        deleteselected() {
-            this.selectedAdmin = null;
+        addAdmin(user) {
+            postRequest({id:user.id}, '/admin/add','json').then(() => {
+                this.update();
+            });
         },
-        addAdmin() {
-            console.log(this.selectedAdmin.id);
-            postRequest({id:this.selectedAdmin.id}, '/users/add','json').then((res) => {
-                console.log(res);
-                this.$router.push('/');
+        remAdmin(user) {
+            postRequest({id:user.id}, '/admin/remove','json').then(() => {
+                this.update();
             });
         },
     },
