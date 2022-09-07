@@ -18,32 +18,30 @@
                 </v-card-text>
             </v-card>
     </v-container>
-    
-    </template>
-    
+</template>
     
     
-    <script>
-    import { getRequest } from "@/requests/getRequest";
-    import { postRequest } from "@/requests/postRequest";
-    export default {
-        name: 'AdminView',
-        data() {
-            return {
-                timer: "",
-                timeleft: "",
-            }
+    
+<script>
+import { getRequest } from "@/requests/getRequest";
+export default {
+    name: 'AdminView',
+    data() {
+        return {
+            timer: "",
+            timeleft: "",
+        }
+    },
+    mounted() {
+        setInterval(this.update, 1000);
+    },
+    methods: {
+        update() {
+            getRequest('/admin/timer/get').then((res) => {
+                this.timer = res.data.timer;
+                this.timeleft = res.data.timeleft;
+            });
         },
-        mounted() {
-            setInterval(this.update, 1000);
-        },
-        methods: {
-            update() {
-                getRequest('/admin/timer/get').then((res) => {
-                    this.timer = res.data.timer;
-                    this.timeleft = res.data.timeleft;
-                });
-            },
-        },
-    }
-    </script>
+    },
+}
+</script>
