@@ -15,7 +15,7 @@
       <template v-slot:append>
         <template v-if="conn.user">
           <template v-if="conn.user.type==1">
-            <v-btn to="/admin" prepend-icon="mdi-clock">Timer</v-btn>
+            <v-btn to="/timer" prepend-icon="mdi-clock">Timer</v-btn>
             <v-btn to="/admin" prepend-icon="mdi-badge-account-horizontal">Admins</v-btn>
             <v-btn to="/edit" prepend-icon="mdi-pen">Edition</v-btn>
             <v-btn to="/chall" prepend-icon="mdi-plus">Creation</v-btn>

@@ -35,5 +35,6 @@ func GetTimer(ctx *gin.Context) {
 }
 
 func RegisterAdminTimerGet(router *gin.RouterGroup) {
-	router.POST("/timer/get", MakeAdmin)
+	routerGroup := router.Group("/timer")
+	routerGroup.POST("/get", GetTimer)
 }
