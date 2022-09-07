@@ -6,4 +6,5 @@ func RegisterAdminRoutes(router *gin.RouterGroup) {
 
 	RegisterAdminGet(router)
 	RegisterAdminChange(router)
+	RegisterAdminTimerGet(router)
 }
