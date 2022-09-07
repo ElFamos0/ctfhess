@@ -7,6 +7,7 @@ import EditChall from "../views/EditChall.vue";
 import Scoreboard from "../views/ScoreBoard.vue";
 import UploadView from "../views/UploadView.vue";
 import AdminView from "../views/AdminView.vue";
+import TimerView from "../views/TimerView.vue";
 
 const routes = [
     {
@@ -64,8 +65,15 @@ const routes = [
       meta: {
           title: 'Admin Panel'
       },
+    },
+    {
+      path: "/timer",
+      name: "Timer",
+      component: TimerView,
+      meta: {
+          title: 'Timer Panel'
+      },
     }
-
 ];
 
 const router = createRouter({

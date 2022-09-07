@@ -1,7 +1,6 @@
 package admincontrollers
 
 import (
-	"backend/controllers/middlewares.go"
 	"backend/models"
 	"net/http"
 
@@ -41,6 +40,6 @@ func MakeNormal(ctx *gin.Context) {
 }
 
 func RegisterAdminChange(router *gin.RouterGroup) {
-	router.POST("/add", middlewares.EnsureAdmin(), MakeAdmin)
-	router.POST("/remove", middlewares.EnsureAdmin(), MakeNormal)
+	router.POST("/add", MakeAdmin)
+	router.POST("/remove", MakeNormal)
 }

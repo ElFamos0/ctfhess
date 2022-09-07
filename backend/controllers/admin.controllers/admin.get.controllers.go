@@ -1,7 +1,6 @@
 package admincontrollers
 
 import (
-	"backend/controllers/middlewares.go"
 	"backend/models"
 	"net/http"
 
@@ -14,5 +13,5 @@ func GetAllAdmins(ctx *gin.Context) {
 }
 
 func RegisterAdminGet(router *gin.RouterGroup) {
-	router.GET("/get", middlewares.EnsureAdmin(), GetAllAdmins)
+	router.GET("/get", GetAllAdmins)
 }
