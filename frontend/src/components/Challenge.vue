@@ -7,7 +7,12 @@
             <VueMarkdownIt breaks :source="chall.subtitle"></VueMarkdownIt>{{chall.points}} Points
         </v-card-subtitle>
         <v-card-subtitle>
-            {{chall.completions}} personnes ont réussis ce challenge.
+            <template v-if="chall.completions == 1">
+                {{chall.completions}} personne a réussi ce challenge.
+            </template>
+            <template v-else>
+                {{chall.completions}} personnes ont réussi ce challenge.
+            </template>
         </v-card-subtitle>
         <v-card-text>
             <VueMarkdownIt breaks :source="chall.short_description"></VueMarkdownIt>
