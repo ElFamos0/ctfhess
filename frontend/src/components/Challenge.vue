@@ -4,7 +4,7 @@
             {{chall.title}}
         </v-card-title>
         <v-card-subtitle>
-            <VueMarkdownIt breaks :source="chall.subtitle"></VueMarkdownIt>{{chall.points}} Points
+            <VueMarkdownIt html breaks :source="chall.subtitle"></VueMarkdownIt>{{chall.points}} Points
         </v-card-subtitle>
         <v-card-subtitle>
             <template v-if="chall.completions == 1">
@@ -15,7 +15,7 @@
             </template>
         </v-card-subtitle>
         <v-card-text>
-            <VueMarkdownIt breaks :source="chall.short_description"></VueMarkdownIt>
+            <VueMarkdownIt html breaks :source="chall.short_description"></VueMarkdownIt>
         </v-card-text>
         <v-card-actions>
             <v-row justify="center">
@@ -25,10 +25,10 @@
             </v-row>
         </v-card-actions>
     </v-card>
-    <v-dialog v-model="dialog" persistent max-width="50vw">
+    <v-dialog v-model="dialog" persistent max-width="65vw">
         <v-window v-model="page">
             <v-window-item v-for="p in chall.pages.length" :key="`card-${p}`" :eager="true" :id="'cards'">
-                <v-card tonal v-show="dialog" width="50vw" class="d-flex flex-column" :height="cardHeight">
+                <v-card tonal v-show="dialog" width="65vw" class="d-flex flex-column" :height="cardHeight">
                     <v-card-title style="font-size: 1.35rem;">
                         {{chall.pages[p-1].title}}
                     </v-card-title>

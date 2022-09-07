@@ -58,12 +58,16 @@ func (u *User) GetPoints() (pt int) {
 }
 
 func GetAdminList() (admins []*User) {
-	db.DB.Find(&admins, "type = ?", 1)
+	db.DB.
+		Preload("Completions").
+		Find(&admins, "type = ?", 1)
 	return
 }
 
 func GetUserList() (users []*User) {
-	db.DB.Find(&users, "type = ?", 0)
+	db.DB.
+		Preload("Completions").
+		Find(&users, "type = ?", 0)
 	return
 }
 

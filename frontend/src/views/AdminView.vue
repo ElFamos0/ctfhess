@@ -1,5 +1,10 @@
 <template>
-<v-container>
+    <v-dialog v-model="dialog">
+        <v-card tonal width="75vw">
+            <SmallProfileVue :user="profileUser"></SmallProfileVue>
+        </v-card>
+    </v-dialog>
+    <v-container>
         <v-card v-if="conn.user.type==0">
             <v-card-title>
                 <h2>Gestions des administrateurs</h2>
@@ -17,7 +22,7 @@
                     <v-col cols="6">
                         <h3 class="mb-5">Admins</h3>
                         <v-row class="mb-2 mt-2" justify="center" v-for="a in adminMembers" :key="a">
-                            <h4>{{a.surname}} {{a.name}}</h4>
+                            <h4 @click="open(a)" class="hover-click">{{a.surname}} {{a.name}}</h4>
                             <v-icon large color="red darken-2" @click="remAdmin(a)">
                                 mdi-delete
                             </v-icon>
@@ -29,14 +34,13 @@
                             <v-icon large color="green darken-2" @click="addAdmin(u)">
                                 mdi-arrow-left
                             </v-icon>
-                            <h4>{{u.surname}} {{u.name}}</h4>
+                            <h4 @click="open(u)" class="hover-click">{{u.surname}} {{u.name}}</h4>
                         </v-row>
                     </v-col>
                 </v-row>
             </v-card-text>
         </v-card>
-</v-container>
-
+    </v-container>
 </template>
 
 
@@ -44,8 +48,12 @@
 <script>
 import { getRequest } from "@/requests/getRequest";
 import { postRequest } from "@/requests/postRequest";
+import SmallProfileVue from "@/components/SmallProfile.vue";
 export default {
     name: 'AdminView',
+    components: {
+        SmallProfileVue,
+    },
     data() {
         return {
             conn : {
@@ -56,6 +64,8 @@ export default {
             users: [],
             bruteusers: [],
             selectedAdmin: null,
+            profileUser: null,
+            dialog: false,
         }
     },
     mounted() {
@@ -81,6 +91,16 @@ export default {
                 this.update();
             });
         },
+        open(u) {
+            this.dialog = true
+            this.profileUser = u
+        }
     },
 }
 </script>
+
+<style scoped>
+.hover-click:hover {
+    cursor: pointer;
+}
+</style>

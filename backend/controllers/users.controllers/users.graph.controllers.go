@@ -82,7 +82,7 @@ func GetGraph(ctx *gin.Context) {
 		} else {
 			inserted := false
 			for i, sb := range graph {
-				if user.Points > sb.Points {
+				if user.Points >= sb.Points {
 					// insert in the scoreboard
 					inserted = true
 					graph = append(graph[:i], append([]*GraphUsers{UserToGraphUser(user)}, graph[i:]...)...)
