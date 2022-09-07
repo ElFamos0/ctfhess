@@ -9,6 +9,9 @@ import (
 
 func GetAllAdmins(ctx *gin.Context) {
 	admins := models.GetAdminList()
+	for _, u := range admins {
+		u.Points = u.GetPoints()
+	}
 	ctx.JSON(http.StatusOK, admins)
 }
 

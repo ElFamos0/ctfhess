@@ -22,6 +22,9 @@ func GetUser(ctx *gin.Context) {
 
 func GetAllUsers(ctx *gin.Context) {
 	users := models.GetUserList()
+	for _, u := range users {
+		u.Points = u.GetPoints()
+	}
 	ctx.JSON(http.StatusOK, users)
 }
 
