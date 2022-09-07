@@ -1,14 +1,22 @@
 <template>
-    <v-card tonal class="blur" @click="dialog = true" disabled>
-        <v-card-title>
-            HAHA BIEN ESSAYE
-        </v-card-title>
-        <v-card-subtitle>
-            JE T'AI EU
-        </v-card-subtitle>
-        <v-card-text>
-            ET ICI JE MET DU FAUX TEXTE COMME CA TA BIEN LE SEUM. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu nunc egestas nisi placerat efficitur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget nunc nec nibh consequat porta sit amet vitae orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ac tincidunt metus, in tempus sapien. Quisque molestie elementum mi nec commodo.
-        </v-card-text>
+    <v-card tonal @click="dialog = true" disabled>
+        <v-overlay :model-value="blur" scroll-strategy="none" scrim="#000" contained class="align-center justify-center">
+            <template v-if="timer">
+                <h1>Ouvre dans :</h1>
+                <h2>{{timer}}</h2>
+            </template>
+        </v-overlay>
+        <v-container class="blur">
+            <v-card-title>
+                HAHA BIEN ESSAYE
+            </v-card-title>
+            <v-card-subtitle>
+                JE T'AI EU
+            </v-card-subtitle>
+            <v-card-text>
+                ET ICI JE MET DU FAUX TEXTE COMME CA TA BIEN LE SEUM. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu nunc egestas nisi placerat efficitur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget nunc nec nibh consequat porta sit amet vitae orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ac tincidunt metus, in tempus sapien. Quisque molestie elementum mi nec commodo.
+            </v-card-text>
+        </v-container>
     </v-card>
     <v-dialog v-model="dialog" persistent max-width="50vw">
         <v-card tonal v-if="dialog" width="500px">
@@ -41,11 +49,13 @@
 <script>
 export default {
   name: 'chall-c',
+  props: ["timer"],
   data() {
     return {
         dialog: false,
         page: 0,
         flag: undefined,
+        blur: true,
         pages: [{
             title: 'Forceur',
             text: 'Je pensais pas que t\'allais le faire'
@@ -69,7 +79,7 @@ export default {
 
 <style scoped>
 .blur {
-    filter: blur(10px);
+    filter: blur(7px);
     user-select: none;
 }
 </style>

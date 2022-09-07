@@ -15,7 +15,7 @@ var (
 	startDateFormat = config.Getenv("CHALL_START_DATE", "2022-09-06T06:00:00")
 	parsedTime      time.Time
 
-	fakeChall = &models.Challenge{
+	fakeChall = models.Challenge{
 		Fake: true,
 	}
 )
@@ -59,7 +59,9 @@ func getAllChall(ctx *gin.Context) {
 			c.Flag = ""
 			if c.OpensAt == day {
 				if day > currentDay() && !admin {
-					L = append(L, fakeChall)
+					chall := fakeChall
+					chall.OpensAt = day
+					L = append(L, &chall)
 					continue
 				}
 				L = append(L, c)

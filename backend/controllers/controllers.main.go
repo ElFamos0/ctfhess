@@ -6,6 +6,7 @@ import (
 	file_controllers "backend/controllers/file.controllers"
 	logincontrollers "backend/controllers/login.controllers"
 	"backend/controllers/middlewares.go"
+	timer_controllers "backend/controllers/timer.controllers"
 	users_controllers "backend/controllers/users.controllers"
 
 	"github.com/gin-gonic/gin"
@@ -26,6 +27,8 @@ func InitControllers(router *gin.RouterGroup) {
 	registerFileRoutes(router)
 
 	registerAdminRoutes(router)
+
+	registerTimerRoutes(router)
 }
 
 func registerChallRoutes(rg *gin.RouterGroup) {
@@ -46,6 +49,11 @@ func registerUsersLoggedInRoutes(rg *gin.RouterGroup) {
 func registerAdminRoutes(rg *gin.RouterGroup) {
 	routerGroup := rg.Group("/admin", middlewares.SetStatus(), middlewares.EnsureLoggedIn(), middlewares.EnsureAdmin())
 	admin_controllers.RegisterAdminRoutes(routerGroup)
+}
+
+func registerTimerRoutes(rg *gin.RouterGroup) {
+	routerGroup := rg.Group("/timer")
+	timer_controllers.RegisterTimerRoutes(routerGroup)
 }
 
 func registerLoginRoutes(rg *gin.RouterGroup) {

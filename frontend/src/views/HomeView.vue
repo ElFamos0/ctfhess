@@ -7,7 +7,12 @@
             <chall :chall="chall" :conn="conn"> </chall>
           </template>
           <template v-else>
-            <fakechall></fakechall>
+            <template v-if="chall.day_open == nextDay" >
+              <fakechall :timer="timer"></fakechall>
+            </template>
+            <template v-else>
+              <fakechall></fakechall>
+            </template>
           </template>
         </v-col>
     </v-row>
@@ -29,6 +34,10 @@ export default {
   data() {
     return {
       challenges: [],
+      polling: null,
+      timer: "",
+      timeleft: 0,
+      nextDay:0,
     }
   },
   mounted() {
@@ -36,8 +45,40 @@ export default {
       data = data.data
       if (data.success) {
         this.challenges = data.challenges
+        console.log(data.challenges);
       }
+      for (let i = 0; i < this.challenges.length; i++) {
+        let broke = false
+        for (let j = 0; j < this.challenges[i].length; j++) {
+          if (this.challenges[i][j].fake) {
+            this.nextDay = this.challenges[i][j].day_open
+            broke = true
+            break
+          }
+        }
+        if (broke) {
+          break
+        }
+      }
+      console.log(this.nextDay)
     })
+    getRequest('/timer/getAbs').then((res) => {
+      this.timeleft = res.data.timeleft;
+      this.update();
+      this.polling = setInterval(this.update, 1000);
+    });
   },
+  methods: {
+      update() {
+        this.timeleft -= 1
+        let hours = Math.floor(this.timeleft / 3600);
+        let minutes = Math.floor(this.timeleft%3600 / 60);
+        let seconds = this.timeleft%3600 % 60;
+        this.timer = `${hours}h ${minutes}m ${seconds}s`
+      },
+  },
+  beforeUnmount () {
+      clearInterval(this.polling)
+  }
 };
 </script>

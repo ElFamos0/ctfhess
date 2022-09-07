@@ -1,4 +1,4 @@
-package admincontrollers
+package timercontrollers
 
 import (
 	"backend/config"
@@ -34,7 +34,6 @@ func GetTimer(ctx *gin.Context) {
 	})
 }
 
-func RegisterAdminTimerGet(router *gin.RouterGroup) {
-	routerGroup := router.Group("/timer")
-	routerGroup.GET("/get", GetTimer)
+func RegisterTimerGet(router *gin.RouterGroup) {
+	router.GET("/get", GetTimer)
 }

@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         update() {
-            getRequest('/admin/timer/get').then((res) => {
+            getRequest('/timer/get').then((res) => {
                 this.timer = res.data.timer;
                 this.timeleft = res.data.timeleft;
             });
