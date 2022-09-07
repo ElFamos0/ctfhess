@@ -1,12 +1,12 @@
 <template>
-    <v-card tonal @click="dialog = true" disabled>
+    <v-card tonal>
         <v-overlay :model-value="blur" scroll-strategy="none" scrim="#000" contained class="align-center justify-center">
             <template v-if="timer">
                 <h1>Ouvre dans :</h1>
                 <h2>{{timer}}</h2>
             </template>
         </v-overlay>
-        <v-container class="blur">
+        <v-container class="blur" @click="dialog = true">
             <v-card-title>
                 HAHA BIEN ESSAYE
             </v-card-title>
