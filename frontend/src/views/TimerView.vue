@@ -28,21 +28,37 @@ export default {
     name: 'AdminView',
     data() {
         return {
+            timerS: 0,
             timer: "",
+            timerleftS: 0,
             timeleft: "",
             polling: null,
         }
     },
     mounted() {
-        this.polling = setInterval(this.update, 1000);
+        getRequest('/timer/get').then((res) => {
+            this.timerS = res.data.timer;
+            this.timeleftS = res.data.timeleft;
+
+            this.update();
+            this.polling = setInterval(this.update, 1000);
+        });
     },
     methods: {
         update() {
-            getRequest('/timer/get').then((res) => {
-                this.timer = res.data.timer;
-                this.timeleft = res.data.timeleft;
-            });
+            this.timeleftS -= 1
+            this.timerS += 1
+
+            this.timer = this.formatTime(this.timerS)
+            this.timeleft = this.formatTime(this.timeleftS)
         },
+        formatTime(t) {
+            let days = Math.floor(t / 86400);
+            let hours = Math.floor(t / 3600)%24;
+            let minutes = Math.floor(t%3600 / 60);
+            let seconds = t%3600 % 60;
+            return `${days} jours ${hours} heures ${minutes} minutes ${seconds} secondes`
+        }
     },
     beforeUnmount () {
         clearInterval(this.polling)

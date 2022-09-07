@@ -2,7 +2,6 @@ package timercontrollers
 
 import (
 	"backend/config"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -15,8 +14,8 @@ var (
 )
 
 type Timer struct {
-	TimeElapsed       string `json:"timer"`
-	TimeBeforeNextDay string `json:"timeleft"`
+	TimeElapsed       int `json:"timer"`
+	TimeBeforeNextDay int `json:"timeleft"`
 }
 
 func init() {
@@ -28,9 +27,13 @@ func init() {
 }
 
 func GetTimer(ctx *gin.Context) {
+	hoursLeft := 24 - int(time.Since(parsedTime).Hours())%24
+	minutesLeft := 60 - int(time.Since(parsedTime).Minutes())%60
+	secondsLeft := 60 - int(time.Since(parsedTime).Seconds())%60
+
 	ctx.JSON(http.StatusOK, &Timer{
-		TimeElapsed:       fmt.Sprintf("%d jours %d heures %d minutes %d secondes", int(time.Since(parsedTime).Hours()/24), int(time.Since(parsedTime).Hours())%24, int(time.Since(parsedTime).Minutes())%60, int(time.Since(parsedTime).Seconds())%60),
-		TimeBeforeNextDay: fmt.Sprintf("%d heures %d minutes %d secondes", 24-int(time.Since(parsedTime).Hours())%24, 60-int(time.Since(parsedTime).Minutes())%60, 60-int(time.Since(parsedTime).Seconds())%60),
+		TimeElapsed:       int(time.Since(parsedTime).Seconds()),
+		TimeBeforeNextDay: hoursLeft*3600 + minutesLeft*60 + secondsLeft,
 	})
 }
 

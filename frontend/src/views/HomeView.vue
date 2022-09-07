@@ -62,7 +62,7 @@ export default {
       }
       console.log(this.nextDay)
     })
-    getRequest('/timer/getAbs').then((res) => {
+    getRequest('/timer/get').then((res) => {
       this.timeleft = res.data.timeleft;
       this.update();
       this.polling = setInterval(this.update, 1000);
