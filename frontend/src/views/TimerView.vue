@@ -30,10 +30,11 @@ export default {
         return {
             timer: "",
             timeleft: "",
+            polling: null,
         }
     },
     mounted() {
-        setInterval(this.update, 1000);
+        this.polling = setInterval(this.update, 1000);
     },
     methods: {
         update() {
@@ -43,5 +44,8 @@ export default {
             });
         },
     },
+    beforeDestroy () {
+        clearInterval(this.polling)
+    }
 }
 </script>
