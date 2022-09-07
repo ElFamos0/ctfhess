@@ -26,59 +26,63 @@
         </v-card-actions>
     </v-card>
     <v-dialog v-model="dialog" persistent max-width="50vw">
-        <v-card tonal v-if="dialog" width="50vw">
-            <v-card-title>
-                {{chall.pages[page].title}}
-            </v-card-title>
-            <v-card-text>
-                <VueMarkdownIt breaks :source="chall.pages[page].description" class="mb-4"></VueMarkdownIt>
-                
-                <v-dialog v-model="image_dialog">
-                    <v-card tonal v-if="dialog" width="500px">
-                        <v-img :src="fileURI+image" class="image"/>
-                    </v-card>
-                </v-dialog>
+        <v-window v-model="page">
+            <v-window-item v-for="p in chall.pages.length" :key="`card-${p}`" :eager="true" :id="'cards'">
+                <v-card tonal v-show="dialog" width="50vw" class="d-flex flex-column" :height="cardHeight">
+                    <v-card-title>
+                        {{chall.pages[p-1].title}}
+                    </v-card-title>
+                    <v-card-text>
+                        <VueMarkdownIt breaks :source="chall.pages[p-1].description" class="mb-4"></VueMarkdownIt>
+                        
+                        <v-dialog v-model="image_dialog">
+                            <v-card tonal v-if="dialog" width="500px">
+                                <v-img :src="fileURI+image" class="image"/>
+                            </v-card>
+                        </v-dialog>
+                    </v-card-text>
+                    <v-card-text style="flex:none;">
+                        <v-container v-if="chall.pages[p-1].flag" class="mb-4">
+                            <v-text-field v-model="flag" label="Flag" :rules="[(v) => !!v || 'Flag is required']"></v-text-field>
+                            <v-btn @click="submitFlag()" color="secondary" :disabled="disableFlag">Envoyer</v-btn>
+                        </v-container>
 
-                <v-container v-if="chall.pages[page].flag" class="mb-4">
-                    <v-text-field v-model="flag" label="Flag" :rules="[(v) => !!v || 'Flag is required']"></v-text-field>
-                    <v-btn @click="submitFlag()" color="secondary" :disabled="disableFlag">Envoyer</v-btn>
-                </v-container>
-
-                <v-row justify="center" class="mb-1">
-                    <template v-for="file in chall.pages[page].files" :key="file">
-                        <v-col cols="2">
-                            <v-tooltip location="top">
-                                <template v-slot:activator="{ props }">
-                                    <template v-if="file.name.split('.').pop() == 'jpeg' || file.name.split('.').pop() == 'jpg' || file.name.split('.').pop() == 'png'">
-                                        <v-img height="50px" :src="fileURI+file.uri" class="image" @click="image_dialog = true; image = file.uri" v-bind="props"/>
-                                    </template>
-                                    <template v-else>
-                                        <v-btn height="100%" :href="fileURI+file.uri" v-bind="props" variant="text">
-                                            <v-icon large color="orange darken-2">
-                                                mdi-file
-                                            </v-icon>
-                                        </v-btn>
-                                    </template>
-                                </template>
-                                <span>{{file.name}}</span>
-                            </v-tooltip>
-                        </v-col>
-                    </template>
-                </v-row>
-
-            </v-card-text>
-            <v-card-actions>
-                <v-btn color="secondary" @click="dialog = false">
-                    Fermer
-                </v-btn>
-                <v-btn color="primary" @click="page--" :disabled="page <= 0">
-                    Précédent
-                </v-btn>
-                <v-btn color="primary" @click="page++" :disabled="page == chall.pages.length-1">
-                    Suivant
-                </v-btn>
-            </v-card-actions>
-        </v-card>
+                        <v-row justify="center" class="mb-1">
+                            <template v-for="file in chall.pages[p-1].files" :key="file">
+                                <v-col cols="2">
+                                    <v-tooltip location="top">
+                                        <template v-slot:activator="{ props }">
+                                            <template v-if="file.name.split('.').pop() == 'jpeg' || file.name.split('.').pop() == 'jpg' || file.name.split('.').pop() == 'png'">
+                                                <v-img height="50px" :src="fileURI+file.uri" class="image" @click="image_dialog = true; image = file.uri" v-bind="props"/>
+                                            </template>
+                                            <template v-else>
+                                                <v-btn height="100%" :href="fileURI+file.uri" v-bind="props" variant="text">
+                                                    <v-icon large color="orange darken-2">
+                                                        mdi-file
+                                                    </v-icon>
+                                                </v-btn>
+                                            </template>
+                                        </template>
+                                        <span>{{file.name}}</span>
+                                    </v-tooltip>
+                                </v-col>
+                            </template>
+                        </v-row>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-btn color="secondary" @click="dialog = false">
+                            Fermer
+                        </v-btn>
+                        <v-btn color="primary" @click="changePage(-1);" :disabled="page <= 0">
+                            Précédent
+                        </v-btn>
+                        <v-btn color="primary" @click="changePage(1);" :disabled="page == chall.pages.length-1">
+                            Suivant
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-window-item>
+        </v-window>
     </v-dialog>
 </template>
 
@@ -103,6 +107,7 @@ export default {
         disableFlag: false,
         logInURI: `${process.env.VUE_APP_BACKEND_URI}/api/login`,
         fileURI: process.env.VUE_APP_BACKEND_URI+'/api/file/get/',
+        cardHeight: '100%',
     }
   },
   mounted() {
@@ -119,6 +124,9 @@ export default {
     click() {
         if (this.conn.logged) {
             this.dialog = true
+            setTimeout(() => {
+                this.fixRowHeights();
+            },100);
         } else {
             window.open(this.logInURI, '_self')
         }
@@ -146,6 +154,24 @@ export default {
                 }, 1000);
             }
         })
+    },
+    changePage(i) {
+        this.page += i;
+    },
+    fixRowHeights() {
+        // Find the tallest element
+        let tallestHeight = 0;
+        document.querySelectorAll('[id^=cards]').forEach((item) => {
+            item.style.display = "";
+            const height = item.clientHeight;
+            if (tallestHeight != 0) {
+                item.style.display = "none";
+            }
+            if (height > tallestHeight) {
+                tallestHeight = height;
+            }
+        });
+        this.cardHeight = tallestHeight + 'px';
     },
   }
 };

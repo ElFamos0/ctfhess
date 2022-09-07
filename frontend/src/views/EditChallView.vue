@@ -196,7 +196,10 @@ export default {
       this.btnDisabled = true
       await postRequest(this.form, '/chall/edit', 'json');
 
-      if (this.files.length == 0) this.$router.push('/')
+      if (this.files.length == 0) {
+        this.$emit('close')
+        this.$router.push('/')
+      }
 
       let files = new FormData()
       for (let i = 0; i < this.files.length; i++) {
@@ -207,6 +210,7 @@ export default {
       }
 
       await postRequest(files, '/file/reupload/'+this.chall.id, 'file')
+      this.$emit('close')
       this.$router.push('/')
     },
     deleteFile(name) {

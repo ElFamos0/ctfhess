@@ -3,7 +3,6 @@ package challcontrollers
 import (
 	"backend/controllers/middlewares.go"
 	"backend/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -31,7 +30,6 @@ func editChall(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Error saving challenge"})
 		return
 	}
-	fmt.Println(challSave.Pages)
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "ok",
