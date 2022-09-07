@@ -29,12 +29,15 @@
         <v-window v-model="page">
             <v-window-item v-for="p in chall.pages.length" :key="`card-${p}`" :eager="true" :id="'cards'">
                 <v-card tonal v-show="dialog" width="50vw" class="d-flex flex-column" :height="cardHeight">
-                    <v-card-title>
+                    <v-card-title style="font-size: 1.35rem;">
                         {{chall.pages[p-1].title}}
                     </v-card-title>
-                    <v-card-text>
-                        <VueMarkdownIt breaks :source="chall.pages[p-1].description" class="mb-4"></VueMarkdownIt>
-                        
+                    <v-card-text style="font-size: 1rem;">
+                        <v-row align="center" justify="center" style="height:100%">
+                            <v-col>
+                                <VueMarkdownIt breaks :source="chall.pages[p-1].description" class="mb-4"></VueMarkdownIt>
+                            </v-col>
+                        </v-row>
                         <v-dialog v-model="image_dialog">
                             <v-card tonal v-if="dialog" width="500px">
                                 <v-img :src="fileURI+image" class="image"/>
