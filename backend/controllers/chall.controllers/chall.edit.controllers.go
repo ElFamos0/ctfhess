@@ -31,6 +31,10 @@ func editChall(ctx *gin.Context) {
 		return
 	}
 
+	for _, p := range challSave.Pages {
+		p.Save()
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "ok",
 	})
