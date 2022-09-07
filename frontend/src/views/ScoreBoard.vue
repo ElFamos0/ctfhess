@@ -28,7 +28,7 @@
             <thead>
                 <tr>
                     <th class="text-center">
-                        Prénom
+                        Noms
                     </th>
                     <th class="text-center">
                         Points
