@@ -39,7 +39,7 @@
 
     <v-footer app fixed height="50pw">
     <v-col class="text-center" cols="12">
-      <v-btn :href="gitlabURL" target="_self" icon variant="text">
+      <v-btn href="https://gitlab.com/elfamos0/challenge_inte" target="_self" icon variant="text">
         <v-icon>mdi-gitlab</v-icon>
       </v-btn>
 
@@ -85,7 +85,6 @@ export default {
       },
       logInURI: `${process.env.VUE_APP_BACKEND_URI}/api/login`,
       logOutURI: `${process.env.VUE_APP_BACKEND_URI}/api/logout`,
-      gitlabURL: "",
       navText: '',
     }; 
   },
