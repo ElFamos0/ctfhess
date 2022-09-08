@@ -36,8 +36,6 @@ func completeChall(ctx *gin.Context) {
 
 	u := ctx.MustGet("user")
 	user := u.(*models.User)
-	user.LastSubmission = time.Now()
-	user.Save()
 
 	for _, compl := range user.Completions {
 		if compl.ChallID == chall.ID {
@@ -70,6 +68,9 @@ func completeChall(ctx *gin.Context) {
 			}
 		}
 	}()
+
+	user.LastSubmission = time.Now()
+	user.Save()
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "ok",
