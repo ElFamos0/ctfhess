@@ -69,7 +69,7 @@ func completeChall(ctx *gin.Context) {
 		}
 	}()
 
-	user.LastSubmission = time.Now()
+	user.LastSubmission = time.Now().Unix()
 	user.Save()
 
 	ctx.JSON(http.StatusOK, gin.H{

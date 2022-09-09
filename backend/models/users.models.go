@@ -2,7 +2,6 @@ package models
 
 import (
 	"backend/db"
-	"time"
 )
 
 const (
@@ -13,14 +12,14 @@ const (
 type UserType int
 
 type User struct {
-	ID             string    `gorm:"primary_key" json:"id"`
-	Email          string    `gorm:"column:email" json:"email"`
-	Name           string    `gorm:"column:name" json:"name"`
-	Surname        string    `gorm:"column:surname" json:"surname"`
-	Promo          int       `gorm:"column:promo" json:"promo"`
-	Spe            string    `gorm:"column:spe" json:"spe"`
-	Type           UserType  `gorm:"column:type" json:"type"`
-	LastSubmission time.Time `gorm:"column:last_submission" json:"last_submission"`
+	ID             string   `gorm:"primary_key" json:"id"`
+	Email          string   `gorm:"column:email" json:"email"`
+	Name           string   `gorm:"column:name" json:"name"`
+	Surname        string   `gorm:"column:surname" json:"surname"`
+	Promo          int      `gorm:"column:promo" json:"promo"`
+	Spe            string   `gorm:"column:spe" json:"spe"`
+	Type           UserType `gorm:"column:type" json:"type"`
+	LastSubmission int64    `gorm:"column:last_submission" json:"last_submission"`
 
 	Completions []*Completion `gorm:"foreignkey:UserID" json:"completions"`
 	Points      int           `gorm:"-" json:"points"`
