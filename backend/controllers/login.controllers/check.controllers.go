@@ -62,6 +62,13 @@ func googleCheck(ctx *gin.Context) {
 		user = gu
 	}
 
+	token, err := provider.RefreshToken(user.RefreshToken)
+	if err == nil {
+		user.AccessToken = token.AccessToken
+		user.RefreshToken = token.RefreshToken
+		gothic.StoreInSession(provider.Name(), sess.Marshal(), ctx.Request, ctx.Writer)
+	}
+
 	u, err := services.GetUserByID(user.UserID)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"logged": false})

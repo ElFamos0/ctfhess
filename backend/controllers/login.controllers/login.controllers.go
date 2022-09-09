@@ -79,7 +79,7 @@ func googleLogin(ctx *gin.Context) {
 		return
 	}
 
-	user, err := provider.FetchUser(sess)
+	_, err = provider.FetchUser(sess)
 	if err != nil {
 		params := ctx.Request.URL.Query()
 		if params.Encode() == "" && ctx.Request.Method == "POST" {
@@ -101,16 +101,14 @@ func googleLogin(ctx *gin.Context) {
 			return
 		}
 
-		gu, err := provider.FetchUser(sess)
+		_, err := provider.FetchUser(sess)
 		if err != nil {
 			gothic.BeginAuthHandler(ctx.Writer, ctx.Request)
 			return
 		}
-
-		user = gu
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"user": user})
+	ctx.Redirect(http.StatusFound, redirectFront)
 }
 
 func GetUser(ctx *gin.Context) (user goth.User, err error) {
