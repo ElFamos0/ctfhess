@@ -164,15 +164,17 @@ export default {
     fixRowHeights() {
         // Find the tallest element
         let tallestHeight = 0;
+        let p = 0;
         document.querySelectorAll('[id^=cards]').forEach((item) => {
             item.style.display = "";
             const height = item.clientHeight;
-            if (tallestHeight != 0) {
+            if (p != this.page) {
                 item.style.display = "none";
             }
             if (height > tallestHeight) {
                 tallestHeight = height;
             }
+            p++;
         });
         this.cardHeight = tallestHeight + 'px';
     },
