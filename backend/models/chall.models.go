@@ -28,6 +28,7 @@ type Challenge struct {
 	Flag             string `json:"flag"`
 	OpensAt          int    `json:"day_open"`
 	Points           int    `json:"points"`
+	FirstYearBlood   bool   `json:"first_year_blood"`
 	Fake             bool   `gorm:"-" json:"fake"`
 
 	Pages       []*ChallengePage `gorm:"foreignkey:ChallengeID" json:"pages"` // Il faut preload avec le bon ordre (ID asc)
