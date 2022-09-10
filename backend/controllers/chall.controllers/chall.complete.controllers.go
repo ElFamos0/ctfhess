@@ -4,7 +4,11 @@ import (
 	"backend/controllers/middlewares.go"
 	"backend/db"
 	"backend/models"
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -42,6 +46,23 @@ func completeChall(ctx *gin.Context) {
 			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"error": "You already did that."})
 			return
 		}
+	}
+
+	if chall.Completions == 0 {
+		// make post request to
+		// with body {"content": "First blood! <@!101806998000578560> has completed the first challenge!"}
+		values := map[string]string{"content": fmt.Sprintf("First blood! %s %s nous à compléter le chall %s pour %d points !", user.Name, user.Surname, chall.Title, chall.Points)}
+		json_data, err := json.Marshal(values)
+		if err != nil {
+			fmt.Println("Cannot marshal values :", err)
+			return
+		}
+		resp, err := http.Post(os.Getenv("DISCORD_WEBHOOK_URL"), "application/json", bytes.NewBuffer(json_data))
+		if err != nil {
+			fmt.Println("Cannot send to webhook :", err)
+			return
+		}
+		resp.Body.Close()
 	}
 
 	c := &models.Completion{
