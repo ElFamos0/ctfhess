@@ -51,7 +51,7 @@ func completeChall(ctx *gin.Context) {
 	if chall.Completions == 0 {
 		// make post request to
 		// with body {"content": "First blood! <@!101806998000578560> has completed the first challenge!"}
-		values := map[string]string{"content": fmt.Sprintf("First blood! %s %s nous à compléter le chall %s pour %d points !", user.Name, user.Surname, chall.Title, chall.Points)}
+		values := map[string]string{"content": fmt.Sprintf("First blood ! **%s %s** nous à compléter le chall **%s** pour **%d points** !", user.Name, user.Surname, chall.Title, chall.Points)}
 		json_data, err := json.Marshal(values)
 		if err != nil {
 			fmt.Println("Cannot marshal values :", err)
