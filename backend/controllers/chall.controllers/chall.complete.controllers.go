@@ -22,10 +22,6 @@ type complReq struct {
 
 func sendFirstBlood(u *models.User, chall *models.Challenge) {
 	// To avoid race cond
-	if u.Promo == config.Getenvint("PROMO_1A", 2025) {
-		chall.FirstYearBlood = true
-		chall.Save()
-	}
 
 	// We fill the challenge's completions
 	db.DB.Model(&models.Completion{}).Where("chall_id = ?", chall.ID).Count(&chall.Completions)
@@ -48,6 +44,11 @@ func sendFirstBlood(u *models.User, chall *models.Challenge) {
 				return
 			}
 		}
+	}
+
+	if u.Promo == config.Getenvint("PROMO_1A", 2025) {
+		chall.FirstYearBlood = true
+		chall.Save()
 	}
 
 	if len(data) > 0 {
