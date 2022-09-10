@@ -33,7 +33,7 @@ func sendFirstBlood(u *models.User, chall *models.Challenge) {
 	var data []byte
 
 	if chall.Completions == 0 {
-		values := map[string]string{"content": fmt.Sprintf("First blood ! **%s %s** nous à compléter le chall **%s** pour **%d points** !", user.Name, user.Surname, chall.Title, chall.Points)}
+		values := map[string]string{"content": fmt.Sprintf("First blood ! **%s %s** nous à compléter le chall **%s** pour **%d points** !", u.Name, u.Surname, chall.Title, chall.Points)}
 		data, err = json.Marshal(values)
 		if err != nil {
 			fmt.Println("Cannot marshal values :", err)
@@ -41,7 +41,7 @@ func sendFirstBlood(u *models.User, chall *models.Challenge) {
 		}
 	} else {
 		if !chall.FirstYearBlood {
-			values := map[string]string{"content": fmt.Sprintf("First blood (1A) ! **%s %s** nous à compléter le chall **%s** pour **%d points** !", user.Name, user.Surname, chall.Title, chall.Points)}
+			values := map[string]string{"content": fmt.Sprintf("First blood (1A) ! **%s %s** nous à compléter le chall **%s** pour **%d points** !", u.Name, u.Surname, chall.Title, chall.Points)}
 			data, err = json.Marshal(values)
 			if err != nil {
 				fmt.Println("Cannot marshal values :", err)
