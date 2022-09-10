@@ -48,6 +48,7 @@ func completeChall(ctx *gin.Context) {
 		}
 	}
 
+	db.DB.Model(&models.Completion{}).Where("chall_id = ?", chall.ID).Count(&chall.Completions)
 	if chall.Completions == 0 {
 		// make post request to
 		// with body {"content": "First blood! <@!101806998000578560> has completed the first challenge!"}
