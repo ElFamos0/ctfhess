@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
+	"github.com/markbates/goth/providers/google"
 )
 
 func googleCheck(ctx *gin.Context) {
@@ -34,32 +35,28 @@ func googleCheck(ctx *gin.Context) {
 
 	user, err := provider.FetchUser(sess)
 	if err != nil {
-		params := ctx.Request.URL.Query()
-		if params.Encode() == "" && ctx.Request.Method == "POST" {
-			ctx.Request.ParseForm()
-			params = ctx.Request.Form
+		s := sess.(*google.Session)
+
+		token, err := provider.RefreshToken(s.RefreshToken)
+		if err == nil {
+			s.AccessToken = token.AccessToken
+			s.RefreshToken = token.RefreshToken
+			gothic.StoreInSession(provider.Name(), sess.Marshal(), ctx.Request, ctx.Writer)
 		}
 
-		// get new token and retry fetch
-		_, err = sess.Authorize(provider, params)
+		user, err = provider.FetchUser(sess)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"logged": false})
 			return
 		}
 
-		err = gothic.StoreInSession(provider.Name(), sess.Marshal(), ctx.Request, ctx.Writer)
+		u, err := services.GetUserByID(user.UserID)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"logged": false})
 			return
 		}
-
-		gu, err := provider.FetchUser(sess)
-		if err != nil {
-			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"logged": false})
-			return
-		}
-
-		user = gu
+		ctx.JSON(http.StatusOK, gin.H{"user": u, "logged": true})
+		return
 	}
 
 	token, err := provider.RefreshToken(user.RefreshToken)
