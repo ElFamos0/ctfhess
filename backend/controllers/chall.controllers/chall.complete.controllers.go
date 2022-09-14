@@ -29,15 +29,15 @@ func sendFirstBlood(u *models.User, chall *models.Challenge) {
 	var data []byte
 
 	if chall.Completions == 0 {
-		values := map[string]string{"content": fmt.Sprintf("First blood ! **%s %s** nous à compléter le chall **%s** pour **%d points** !", u.Name, u.Surname, chall.Title, chall.Points)}
+		values := map[string]string{"content": fmt.Sprintf("First blood ! **%s %s** nous a complété le chall **%s** pour **%d points** !", u.Name, u.Surname, chall.Title, chall.Points)}
 		data, err = json.Marshal(values)
 		if err != nil {
 			fmt.Println("Cannot marshal values :", err)
 			return
 		}
 	} else {
-		if !chall.FirstYearBlood {
-			values := map[string]string{"content": fmt.Sprintf("First blood (1A) ! **%s %s** nous à compléter le chall **%s** pour **%d points** !", u.Name, u.Surname, chall.Title, chall.Points)}
+		if !chall.FirstYearBlood && u.Promo == config.Getenvint("PROMO_1A", 2025) {
+			values := map[string]string{"content": fmt.Sprintf("First blood (1A) ! **%s %s** nous a complété le chall **%s** pour **%d points** !", u.Name, u.Surname, chall.Title, chall.Points)}
 			data, err = json.Marshal(values)
 			if err != nil {
 				fmt.Println("Cannot marshal values :", err)
