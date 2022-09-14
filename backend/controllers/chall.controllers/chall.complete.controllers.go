@@ -36,7 +36,7 @@ func sendFirstBlood(u *models.User, chall *models.Challenge) {
 			return
 		}
 	} else {
-		if !chall.FirstYearBlood {
+		if !chall.FirstYearBlood && u.Promo == config.Getenvint("PROMO_1A", 2025) {
 			values := map[string]string{"content": fmt.Sprintf("First blood (1A) ! **%s %s** nous a complété le chall **%s** pour **%d points** !", u.Name, u.Surname, chall.Title, chall.Points)}
 			data, err = json.Marshal(values)
 			if err != nil {
