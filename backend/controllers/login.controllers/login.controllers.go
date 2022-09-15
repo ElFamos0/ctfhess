@@ -142,18 +142,28 @@ func GetUser(ctx *gin.Context) (user goth.User, err error) {
 		// get new token and retry fetch
 		_, err = sess.Authorize(provider, params)
 		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"logged": false})
 			return
 		}
 
 		err = gothic.StoreInSession(provider.Name(), sess.Marshal(), ctx.Request, ctx.Writer)
 		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"logged": false})
 			return
 		}
 
 		user, err = provider.FetchUser(sess)
 		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{"logged": false})
 			return
 		}
+	}
+
+	token, err := provider.RefreshToken(user.RefreshToken)
+	if err == nil {
+		user.AccessToken = token.AccessToken
+		user.RefreshToken = token.RefreshToken
+		gothic.StoreInSession(provider.Name(), sess.Marshal(), ctx.Request, ctx.Writer)
 	}
 	return
 }
