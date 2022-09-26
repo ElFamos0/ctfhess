@@ -79,10 +79,10 @@ export default {
 
   data: () => ({
     fin: new Date(process.env.VUE_APP_DATE),
-    jours: 5,
+    jours: 0,
     heures: 0,
     minutes: 0,
-    secondes: 5,
+    secondes: -1,
   }),
 
   mounted() {
